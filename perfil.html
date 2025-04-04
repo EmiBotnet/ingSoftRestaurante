@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - Restaurante "Cuatro Estaciones"</title>
+    <link rel="stylesheet" href="css/perfil.css">
+</head>
+<body>
+
+    <header>
+        <div class="top-bar">
+            <span class="menu-icon">☰</span>
+            <h1>Restaurante: <em>"Cuatro estaciones"</em></h1>
+            <div class="icons">
+                <span class="cart-icon">🛒</span>
+            </div>
+        </div>
+    </header>
+
+    <section class="profile-container">
+        <h2>Mi perfil</h2>
+
+        <div class="profile-photo">
+            <img id="profile-image" src="imagenes/icon-perfil.png" alt="Foto de perfil">
+            <p>
+                <label for="file-input" class="file-label">Cambiar foto de perfil</label>
+                <input type="file" id="file-input" accept="image/*" style="display: none;">
+            </p>
+        </div>
+
+        <form>
+            <label for="nombre">Nombre(s)</label>
+            <input type="text" id="nombre" placeholder="Ingresa tu nombre">
+
+            <label for="apellidos">Apellidos(s)</label>
+            <input type="text" id="apellidos" placeholder="Ingresa tu(s) apellidos(s)">
+
+            <label for="fecha-nacimiento">Fecha de nacimiento</label>
+            <input type="date" id="fecha-nacimiento">
+
+            <label for="telefono">Teléfono</label>
+            <input type="text" id="telefono" placeholder="Ingrese su teléfono">
+
+            <label for="email">Correo electrónico</label>
+            <input type="email" id="email" placeholder="Ingrese su correo electrónico">
+
+            <label for="password">Contraseña</label>
+            <input type="password" id="password" placeholder="Ingresar contraseña">
+
+            <button type="submit">Guardar cambios</button>
+            <button id="back-button" type="button">Regresar</button>
+            <button id="logout-button">Cerrar Sesión</button>
+        </form>
+    </section>
+
+    <script src="JavaScript/perfil.js"></script>
+
+</body>
+</html>
+
