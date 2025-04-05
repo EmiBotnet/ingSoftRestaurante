@@ -20,7 +20,6 @@ html {
     background-color: #f4f4f4;  
 }
 
-/* Asegura que la imagen quede como fondo */
 .fondo-imagen {
     position: fixed; /* Fija la imagen al fondo */
     top: 0;
@@ -74,7 +73,7 @@ html {
     color: black;
     background-color: orange;
     padding: 5%;
-    
+    transition: background-color 0.3s ease, opacity 0.3s ease;
 }
 
 @media (min-width: 1140px) {
