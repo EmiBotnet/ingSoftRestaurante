@@ -1,0 +1,68 @@
+/*Generales*/
+:root{
+--fuente_principal: "Cascadia Mono", sans-serif;
+--fuente_secundario: "Playfair Display", serif;
+--color_principal: #f89c1c;
+--color_secundario: #e6b672; 
+}
+body{
+
+}
+header{
+    background-color: var(--color_principal);
+    padding: 30px;
+    display: flex;
+    flex-direction: row-reverse;
+    align-content: space-between;
+}
+/*Navbar*/
+.nav-enlace{
+    padding: 2rem;
+    font-size: 1.3em;
+    text-decoration: none;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+.nav-enlace:hover{
+    color: black;
+}
+/*Navbar menu*/
+.nav-menu-comida{
+    background-color: var(--color_secundario);
+    margin: 20px;
+    padding: 15px;
+    border-radius: 1.5rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: center; /*Centrar el texto*/
+}
+.tipo-comida{
+    padding: 4rem;
+    font-size: 1.3em;
+    text-decoration: none;
+    color: white;
+    text-transform: uppercase;
+    font-weight: bold;
+}
+/*Imagen de fondo*/
+.fondo-imagen {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1; /* Manda el fondo detrás de todo */
+}
+.fondo-imagen img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que la imagen cubra el fondo sin distorsionarse */
+    opacity: 0.5;
+}
+/*Titulo*/
+.titulo{
+    text-transform: uppercase;
+    text-align: center;
+    font-size: 2.7em;
+}
