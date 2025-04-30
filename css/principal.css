@@ -4,6 +4,7 @@
 --fuente_secundario: "Playfair Display", serif;
 --color_principal: #f89c1c;
 --color_secundario: #e6b672; 
+--color_terceario: #f0cd9d;
 }
 body{
 
@@ -23,6 +24,7 @@ header{
     color: white;
     text-transform: uppercase;
     font-weight: bold;
+    font-family: var(--fuente_secundario);
 }
 .nav-enlace:hover{
     color: black;
@@ -36,15 +38,24 @@ header{
     display: flex;
     flex-direction: row;
     justify-content: center; /*Centrar el texto*/
+    position: sticky;
 }
-.tipo-comida{
-    padding: 4rem;
-    font-size: 1.3em;
+.tipo-comida {
+    display: inline-block;            /* Permite aplicar padding y width correctamente */
+    padding: 0.5rem 3.5rem;           /* Espacio arriba/abajo = 0.5rem, izquierda/derecha = 1.5rem */
+    font-size: 1.5em;
     text-decoration: none;
     color: white;
     text-transform: uppercase;
     font-weight: bold;
-}
+    transition: all 0.3s ease;        /* Animación suave en hover */
+  }
+  .tipo-comida:hover {
+    color: black;
+    background-color: var(--color_terceario);
+    padding: 0.3rem 4rem;             /* Un poco más ancho y más compacto */
+    border-radius: 0.5rem;            /* (Opcional) Bordes redondeados */
+  }
 /*Imagen de fondo*/
 .fondo-imagen {
     position: absolute;
