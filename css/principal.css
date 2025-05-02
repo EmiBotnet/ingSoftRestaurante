@@ -34,8 +34,10 @@ header{
     font-size: 3ex;
 }
 /*Navbar*/
-.nav-principal{
-
+.nav_subcontenedor{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 .nav-enlace{
     text-decoration: none;
@@ -43,6 +45,11 @@ header{
     color: white;
     font-weight: bold;
     font-size: 3ex;
+}
+.nav_enlace-menu {
+    display: flex;
+    align-items: center; /* Alinea verticalmente */
+    padding-right: 50px; /* o menos si quieres menos separación */
 }
 .nav-enlace:hover{
     color: black;
