@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pago en Línea - Cuatro Estaciones</title>
+    <link rel="stylesheet" href="css/enviodomicilio.css">
+</head>
+<body>
+    <div class="top-bar">
+        <span class="menu-icon">☰</span>
+        <h1>Restaurante: <em>"Cuatro estaciones"</em></h1>
+        <a href="login.html" class="btn-login">¿Iniciar sesión?</a>
+    </div>
+
+    <div class="payment-container">
+        <div class="payment-content">
+            <form id="payment-form">
+                <h3>Información de contacto</h3>
+
+                <input type="text" placeholder="Nombre(s) de quién recibe" required>
+                <input type="text" placeholder="Calle principal y número de casa" required>
+                <input type="text" placeholder="Cruzamientos/Referencias" required maxlength="16">
+
+                <div class="small-inputs">
+                    <input type="text" placeholder="Código postal" required maxlength="5">
+                    <input type="text" placeholder="Teléfono" required maxlength="10">
+                    <input type="email" placeholder="Email" required>
+                </div>
+            </form>
+
+            <div class="payment-methods-container">
+                <h3>Método de pago</h3>
+                <div class="payment-methods">
+                    <label for="tarjeta"><img src="img/tarjeta.png" alt="Tarjeta" class="payment-icon">Tarjeta<input type="radio" id="tarjeta" name="metodo_pago" value="tarjeta"></label><br>
+                    <label for="efectivo"><img src="img/efectivo.png" alt="Efectivo" class="payment-icon">Efectivo<input type="radio" id="efectivo" name="metodo_pago" value="efectivo"></label>
+                </div>
+            </div>
+        </div>
+        <button type="submit">Terminar orden</button>
+    </div>
+</body>
+</html>
