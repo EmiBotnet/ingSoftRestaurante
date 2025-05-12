@@ -10,9 +10,10 @@ usuarios = {
      'cocinero1': {'password': 'cocina', 'rol': 'cocinero'}
  }
 
+
 @app.route('/')
 def index():
-    return render_template('template/login.html') #Cargar login
+    return render_template('index.html') #Cargar login
 
 @app.route('/login', methods=['POST'])
 def login():
