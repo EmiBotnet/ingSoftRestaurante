@@ -1,0 +1,19 @@
+[
+    {
+        "comida": "Ensalada",
+        "estado": "disponible",
+        "precio": 175
+    },
+
+    {
+        "comida": "Hamburguesa",
+        "estado": "disponible",
+        "precio": 200
+    },
+
+    {
+        "comida": "Cheescake",
+        "estado": "Agotado",
+        "precio": 999
+    }
+]
