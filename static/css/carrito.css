@@ -1,0 +1,102 @@
+/* Estilos base */
+:root {
+  --primary-color: #478ac9;
+  --secondary-color: #f8f9fa;
+  --text-color: #333;
+  --light-gray: #e9ecef;
+  --white: #fff;
+}
+
+body {
+  font-family: 'Roboto', sans-serif;
+  color: var(--text-color);
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Barra superior */
+.top-bar {
+    background-color: #f89c1c;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    color: black;
+    font-size: 18px;
+}
+
+.menu-icon, .cart-icon, .user-icon {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+/* Estilos del contenido principal */
+.page-header {
+  padding: 20px 0;
+  text-align: center;
+}
+
+.page-title {
+  font-family: 'Roboto', sans-serif;
+  color: black;
+  margin: 0;
+  font-size: 2.0rem;
+}
+
+.cart-section {
+  padding: 40px 0;
+}
+
+.cart-empty {
+  text-align: center;
+}
+
+.cart-empty h2 {
+  font-size: 1.8rem;
+  font-family: 'Roboto', sans-serif;
+  margin-bottom: 10px;
+  color: black;
+}
+
+.cart-empty p {
+  font-size: 1.1rem;
+  font-family: 'Roboto', sans-serif;
+  margin-bottom: 25px;
+  color: #000000;
+}
+
+/* Botón */
+.btn {
+  display: inline-block;
+  padding: 10px 25px;
+  border-radius: 4px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s;
+}
+
+.primary-btn {
+  background-color: #f89c1c; /* Naranja (igual que la barra superior) */
+  color: var(--white);
+  border: 2px solid #f89c1c; /* Mismo color que el fondo */
+}
+
+.primary-btn:hover {
+  background-color: transparent;
+  color: #f89c1c; /* Naranja al hacer hover */
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .page-title {
+      font-size: 2rem;
+  }
+}
