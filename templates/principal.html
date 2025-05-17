@@ -1,30 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../static/css/principal.css">
     <!-- <link rel="stylesheet" href="css/principal.css"> -->
-     <!--Archivo de normalización (NO TOCAR)-->
+    <!--Archivo de normalización (NO TOCAR)-->
     <link rel="stylesheet" href="css/normalize.css">
     <!--Fonts-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cascadia+Mono:ital,wght@0,200..700;1,200..700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cascadia+Mono:ital,wght@0,200..700;1,200..700&display=swap"
+        rel="stylesheet">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cascadia+Mono:ital,wght@0,200..700;1,200..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cascadia+Mono:ital,wght@0,200..700;1,200..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
 
     <title>Cuatro Estaciones</title>
 </head>
+
 <body>
     <main class="contenedor">
 
-         <!--Fondo de pantalla-->
-         <div class="fondo-imagen">
+        <!--Fondo de pantalla-->
+        <div class="fondo-imagen">
             <img src="../static/img/fondoIndex.jpg" alt="fondoIndex.jpg">
-        </div> 
-       
+        </div>
+
         <!--Header-->
         <div class="nav-contenedor">
             <header>
@@ -39,7 +44,8 @@
                         <a class="nav-enlace" href="#">Nosotros</a>
                     </nav>
                     <div class="nav_menu-img">
-                        <a href="#"><img class="nav_enlace-menu" src="../static/img/icons8-menú.svg" alt="icono_menu"></a>
+                        <a href="#"><img class="nav_enlace-menu" src="../static/img/icons8-menú.svg"
+                                alt="icono_menu"></a>
                     </div>
                 </div>
             </header>
@@ -59,12 +65,16 @@
 
         <!--Sección de la comida-->
         <div class="contenedor-comida">
-
+            {% for item in menu %}
+            <div class="platillo">
+                <h2>{{ item.comida }}</h2>
+                <p><strong>Estado:</strong> {{ item.estado }}</p>
+                <p><strong>Precio:</strong> ${{ item.precio }}</p>
+                 <button class="btn-agregar">Agregar al pedido</button>
+            </div>
+            {% endfor %}
         </div>
     </main>
-    <footer>
-        <p>hola</p>
-    </footer>
-    
 </body>
+
 </html>

@@ -44,7 +44,9 @@ header{
     padding: 20px;
     color: white;
     font-weight: bold;
-    font-size: 3ex;
+    font-size: 2.5ex;
+    text-transform: uppercase;
+     transition: all 0.3s ease;  
 }
 .nav_enlace-menu {
     display: flex;
@@ -53,10 +55,37 @@ header{
 }
 .nav-enlace:hover{
     color: black;
+    font-size: 2.8ex;
     transition: all 0.3s ease;        /* Animación suave en hover */
 }
 /*Navbar menu*/
-
+.nav-menu-comida{
+    display: flex;
+    justify-content: center;
+    background-color: var(--color_terceario);
+    margin-left: 200px;
+    margin-right: 200px;
+    padding: 1.5rem;
+    border-radius: 10px;
+}
+.menu-general{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    max-width: 900px; 
+    transition: all 0.3s ease;  
+}
+.tipo-comida{
+    text-decoration: none;
+    color: white;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;  
+}
+.tipo-comida:hover{
+    color: black;
+    font-size: 1.9rem;
+    transition: all 0.3s ease;    
+}
 /*Imagen de fondo*/
 .fondo-imagen {
     position: absolute;
@@ -79,10 +108,58 @@ header{
     font-size: 2.7em;
 }
 /*Comida*/
-.contenedor-comida{
-    /*background-color: rgba(255, 255, 255, 0.8); /* Blanco con 80% de opacidad */
-    min-height: 500px; 
+.contenedor-comida {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Adaptable a tamaños de pantalla */
+    gap: 2rem; /* Espaciado entre platillos */
+    background-color: rgba(255, 255, 255, 0.8);
+    padding: 2rem;
     margin: 40px;
     border-radius: 1.5rem;
-    border-width: 3px;
+    border: 3px solid #ccc; /* Asegura que el borde se vea */
+    box-sizing: border-box;
+}
+
+/* Platillo */
+.platillo {
+    background-color: var(--color_secundario);
+    border-radius: 1.2rem;
+    padding: 2rem 1.5rem;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: #fff;
+}
+
+.platillo:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+.platillo h2 {
+    font-size: 1.6rem;
+    margin-bottom: 1rem;
+    color: var(--color_primario); /* Título en otro color si lo deseas */
+}
+
+.platillo p {
+    font-size: 1.1rem;
+    margin: 0.5rem 0;
+    color: #f8f8f8;
+}
+
+.btn-agregar {
+    background-color: var(--color_primario);
+    color: white;
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    border: none;
+    border-radius: 0.8rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-top: auto;
+}
+
+.btn-agregar:hover {
+    background-color: #ff8000; /* color alternativo al pasar el mouse */
 }

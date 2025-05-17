@@ -63,6 +63,7 @@ html {
 .right {
     width: 100%;
     padding: 40px;
+    padding-bottom: 10px;
     text-align: center;
 }
 
@@ -80,7 +81,7 @@ html {
     .contenedor-botones{
         display: flex;
         flex-direction: row;
-        justify-content: space-evenly;
+        justify-content: space-between;
        
     }
 
@@ -93,11 +94,32 @@ html {
     }
 }
 
+.btnInvitado-contenedor{
+    display: flex;
+    justify-content: center;
+    padding-bottom: 20px;
+}
 
-.redir:hover {
+.btnInvitado {
+    width: 500px;              /* Cambia según lo grande que lo quieras */
+    height: 60px;              /* Altura deseada */
+    background-color: orange;
+    color: black;
+    border: none;
+    padding-top: 1px;
+    font-size: 1.8rem;         /* Texto más grande */
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s ease, opacity 0.3s ease;
+}
+
+.redir:hover{
     background: #ffffcc;
 }
 
+.btnInvitado:hover {
+    background: #ffffcc;
+}
 
 
 h1 {
