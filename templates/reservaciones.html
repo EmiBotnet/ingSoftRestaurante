@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"> 
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+    <title>Reservaciones</title> 
+    <link rel="stylesheet" href="../static/css/reservaciones.css">
+</head>
+
+<body>
+    <!-- Contenedor principal de la barra de navegación -->
+    <div class="nav-contenedor">
+        <header>
+            <!-- Logo/Nombre del restaurante -->
+            <div class="nombre-empresa">
+                <a class="nombre-empresa_texto" href="#">Restaurante: "Cuatro Estaciones"</a>
+            </div>
+            
+            <!-- Contenedor del menú de navegación -->
+            <div class="nav_subcontenedor">
+                <!-- Menú principal -->
+                <nav class="nav-principal">
+                    <a class="nav-enlace" href="#">Reservaciones</a>
+                    <a class="nav-enlace" href="#">Delivery</a>
+                    <a class="nav-enlace" href="#">Contactanos</a>
+                    <a class="nav-enlace" href="#">Nosotros</a>
+                </nav>
+                
+                <!-- Icono de menú (para versión móvil) -->
+                <div class="nav_menu-img">
+                    <a href="#"><img class="nav_enlace-menu" src="../static/img/icons8-menú.svg" alt="icono_menu"></a>
+                </div>
+            </div>
+        </header>
+    </div>
+
+    <!-- Contenedor principal del contenido -->
+    <div class="contenedor-principal">
+        <!-- Barra superior con información de fecha/hora -->
+        <header class="barra-superior">
+            <div class="info-tiempo">
+                <span class="fecha-info">
+                    <!-- Espacios para mostrar dinámicamente la fecha/hora -->
+                    <span id="dia-semana">Martes</span>,
+                    <span id="fecha">25 de junio de 2024</span> - 
+                    <span id="hora">14:30:45</span>
+                </span>
+                <!-- Selector de fecha para filtrar reservaciones -->
+                <input type="date" id="selector-fecha" class="selector-fecha">
+            </div>
+        </header>
+
+        <!-- Contenido principal dividido en dos columnas -->
+        <div class="contenido-principal">
+            <!-- Panel izquierdo - Lista de reservaciones -->
+            <aside class="panel-izquierdo">
+                <!-- Sección de búsqueda -->
+                <div class="seccion-busqueda">
+                    <h2 class="titulo-seccion">Reservaciones</h2>
+                    <div class="grupo-busqueda">
+                        <!-- Campo para buscar reservaciones -->
+                        <input type="text" placeholder="Buscar" class="busqueda-input">
+                        <button class="btn-buscar">Buscar reservaciones</button>
+                    </div>
+                </div>
+
+                <!-- Lista de reservaciones -->
+                <div class="lista-reservas">
+                    <!-- Ejemplo de item de reserva -->
+                    <div class="reserva-item">
+                        <div class="reserva-header">
+                            <h3>Ana Rodríguez</h3> <!-- Nombre del cliente -->
+                            <span class="reserva-hora"> 22/05/2025-8:30 pm</span> <!-- Fecha y hora -->
+                        </div>
+                        <div class="reserva-detalle">
+                            <span>4 personas</span> <!-- Número de comensales -->
+                            <span>Mesa 3</span> <!-- Mesa asignada -->
+                            <span class="reserva-notas">Reservado</span> <!-- Estado -->
+                        </div>
+                    </div>
+                    <!-- Botón para regresar (podría cerrar detalles de reserva) -->
+                    <button class="btn-regresar">Regresar</button>
+                </div>
+            </aside>
+            
+            <!-- Área derecha - Mapa del restaurante -->
+            <main class="area-mesas">
+                <h1 class="titulo-mapa">Distribución del Restaurante</h1>
+                
+                <!-- Contenedor del mapa con mesas y áreas clave -->
+                <div class="mapa-restaurante">
+                    <!-- Mesas del restaurante (8 en total) -->
+                    <!-- Cada mesa es un círculo con información -->
+                    <div class="mesa mesa-1 disponible" data-mesa="1">
+                        <span>Mesa 1</span>
+                        <span class="mesa-estado">Disponible</span>
+                    </div>
+                    
+                    <div class="mesa mesa-2 disponible" data-mesa="2">
+                        <span>Mesa 2</span>
+                        <span class="mesa-estado">Disponible</span>
+                    </div>
+                    
+                    <div class="mesa mesa-3 disponible" data-mesa="3">
+                        <span>Mesa 3</span>
+                        <span class="mesa-estado">Disponible</span>
+                    </div>
+                    
+                    <div class="mesa mesa-4 disponible" data-mesa="4">
+                        <span>Mesa 4</span>
+                        <span class="mesa-estado">Disponible</span>
+                    </div>
+                    
+                    <div class="mesa mesa-5 disponible" data-mesa="5">
+                        <span>Mesa 5</span>
+                        <span class="mesa-estado">Disponible</span>
+                    </div>
+                    
+                    <div class="mesa mesa-6 disponible" data-mesa="6">
+                        <span>Mesa 6</span>
+                        <span class="mesa-estado">Disponible</span>
+                    </div>
+                    
+                    <div class="mesa mesa-7 disponible" data-mesa="7">
+                        <span>Mesa 7</span>
+                        <span class="mesa-estado">Disponible</span>
+                    </div>
+                    
+                    <div class="mesa mesa-8 disponible" data-mesa="8">
+                        <span>Mesa 8</span>
+                        <span class="mesa-estado">Disponible</span>
+                    </div>
+                    
+                    <!-- Áreas importantes del restaurante -->
+                    <div class="punto clave entrada">
+                        <span>Entrada principal</span>
+                    </div>
+                    
+                    <div class="punto clave baño">
+                        <span>Baños</span>
+                    </div>
+                    
+                    <div class="punto clave cocina">
+                        <span>Cocina</span>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+</body>
+</html>

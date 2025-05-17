@@ -1,0 +1,382 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; 
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: #f8f9fa; /* Color de fondo claro */
+    color: #333; /* Color de texto principal */
+    height: 100vh; /* Ocupa toda la altura visible */
+    overflow: hidden; /* Oculta el scroll */
+}
+
+/* BARRA DE NAVEGACIÓN SUPERIOR */
+header{
+    display: flex;
+    height: 70px;
+    background-color: #f89c1c; /* Color naranja */
+    justify-content: space-between; /* Espacio entre logo y menú */
+    align-items: center; /* Centrado vertical */
+    padding: 10px;
+}
+
+/* Estilos para el nombre/logo del restaurante */
+.nombre-empresa{
+    display: flex;
+    font-family: var(--fuente_tercearia);
+    font-style: var(--estilo_terceario);
+}
+.nombre-empresa_texto{
+    text-decoration: none;
+    color: black;
+    text-transform: uppercase; /* Texto en mayúsculas */
+    height: 20px;
+    font-weight: bold;
+    font-size: 3ex; /* Tamaño relativo */
+}
+
+/* MENÚ PRINCIPAL */
+.nav_subcontenedor{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+/* Estilos para los enlaces del menú */
+.nav-enlace{
+    text-decoration: none;
+    padding: 20px;
+    color: white;
+    font-weight: bold;
+    font-size: 2.5ex;
+    text-transform: uppercase;
+    transition: all 0.3s ease; /* Transición suave para efectos hover */
+}
+/* Icono de menú (versión móvil) */
+.nav_enlace-menu {
+    display: flex;
+    align-items: center; /* Centrado vertical */
+    padding-right: 50px;
+}
+/* Efecto al pasar el mouse sobre los enlaces */
+.nav-enlace:hover{
+    color: black;
+    font-size: 2.8ex;
+    transition: all 0.3s ease;
+}
+
+/* CONTENEDOR PRINCIPAL */
+.contenedor-principal {
+    display: flex;
+    flex-direction: column;
+    height: calc(100vh - 53px); /* Altura total menos la barra superior */
+}
+
+/* BARRA DE FECHA/HORA */
+.barra-superior {
+    background-color: #f89c1c; /* Naranja igual que la barra superior */
+    color: rgb(0, 0, 0);
+    padding: 0.8rem 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1); /* Sombra sutil */
+}
+
+.info-tiempo {
+    display: flex;
+    align-items: center;
+    gap: 1rem; /* Espacio entre elementos */
+    justify-content: center;
+    width: 100%;
+    max-width: 800px;
+}
+
+.fecha-info {
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap; /* Permite que se ajuste en pantallas pequeñas */
+    justify-content: center;
+}
+
+.selector-fecha {
+    padding: 0.3rem;
+    border-radius: 4px;
+    border: none;
+    margin-left: 1rem;
+}
+
+/* CONTENIDO PRINCIPAL (2 columnas) */
+.contenido-principal {
+    display: flex;
+    flex: 1; /* Ocupa todo el espacio disponible */
+    overflow: hidden;
+    background-color: #ecf0f1;
+    border: 2px solid #000000;
+}
+
+/* PANEL IZQUIERDO (Reservaciones) */
+.panel-izquierdo {
+    width: 320px; /* Ancho fijo */
+    background-color: #f89c1c; /* Naranja */
+    padding: 1rem;
+    border-right: 1px solid #ddd;
+    overflow-y: auto; /* Scroll vertical si hay muchas reservas */
+}
+
+.titulo-seccion {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: #000000;
+}
+
+/* Grupo de búsqueda */
+.grupo-busqueda {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem; /* Espacio entre elementos */
+    margin-bottom: 1.5rem;
+}
+
+.busqueda-input {
+    padding: 0.6rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 0.95rem;
+}
+
+/* Botones */
+.btn-buscar {
+    background-color: #2ecc71; /* Verde */
+    color: rgb(3, 3, 3);
+    border: none;
+    padding: 0.6rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.btn-regresar {
+    background-color: #559fff; /* Azul */
+    color: rgb(3, 3, 3);
+    border: none;
+    padding: 0.6rem;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+/* Efecto hover para botón buscar */
+.btn-buscar:hover {
+    background-color: #0c853f; /* Verde más oscuro */
+}
+
+/* LISTA DE RESERVACIONES */
+.lista-reservas {
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem; /* Espacio entre reservas */
+}
+
+/* Item de reserva individual */
+.reserva-item {
+    background-color: #f8f9fa;
+    border-radius: 6px;
+    padding: 0.8rem;
+    border-left: 4px solid #3498db; /* Borde azul izquierdo */
+    cursor: pointer;
+    transition: all 0.3s; /* Transición para efectos hover */
+}
+
+/* Efecto al pasar el mouse sobre una reserva */
+.reserva-item:hover {
+    transform: translateX(5px); /* Se mueve ligeramente a la derecha */
+    box-shadow: 0 3px 6px rgba(0,0,0,0.1); /* Sombra */
+}
+
+/* Estilo para reserva activa/seleccionada */
+.reserva-item.reserva-activa {
+    border-left-color: #2ecc71; /* Borde verde */
+    background-color: #e8f8f0; /* Fondo verde claro */
+}
+
+/* Encabezado de la reserva (nombre y hora) */
+.reserva-header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 0.4rem;
+}
+
+.reserva-header h3 {
+    font-size: 1rem;
+    color: #2c3e50;
+}
+
+.reserva-hora {
+    font-weight: bold;
+    color: #3498db; /* Azul */
+}
+
+/* Detalles de la reserva (personas, mesa, estado) */
+.reserva-detalle {
+    display: flex;
+    gap: 1rem; /* Espacio entre elementos */
+    font-size: 0.85rem;
+    color: #7f8c8d; /* Gris */
+}
+
+.reserva-notas {
+    font-style: italic;
+    color: #e67e22; /* Naranja */
+}
+
+/* ÁREA DE MESAS (Panel derecho) */
+.area-mesas {
+    flex: 1; /* Ocupa todo el espacio restante */
+    padding: 1.5rem;
+    overflow: auto; /* Scroll si el contenido es muy grande */
+    background-color: #fff9ee; /* Fondo crema claro */
+}
+
+.titulo-mapa {
+    font-size: 1.5rem;
+    color: #000000;
+    margin-bottom: 1.5rem;
+}
+
+/* Contenedor del mapa del restaurante */
+.mapa-restaurante {
+    position: relative; /* Permite posicionamiento absoluto de hijos */
+    background-color: rgb(255, 255, 255);
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05); /* Sombra sutil */
+    height: calc(100% - 3rem);
+    min-height: 500px; /* Altura mínima */
+}
+
+/* ESTILOS PARA LAS MESAS */
+.mesa {
+    position: absolute; /* Posicionamiento exacto dentro del mapa */
+    width: 90px;
+    height: 90px;
+    border-radius: 50%; /* Forma circular */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1); /* Transición personalizada */
+    box-shadow: 0 3px 6px rgba(0,0,0,0.16); /* Sombra */
+    color: white;
+    font-weight: 500;
+    z-index: 1;
+    background: linear-gradient(135deg, #2ecc71, #27ae60); /* Degradado verde */
+}
+
+/* Efecto hover para mesas */
+.mesa:hover {
+    transform: scale(1.1) translateY(-5px); /* Agranda y levanta ligeramente */
+    box-shadow: 0 10px 20px rgba(0,0,0,0.2); /* Sombra más pronunciada */
+    z-index: 10; /* Asegura que esté por encima de otros elementos */
+}
+
+.mesa span {
+    pointer-events: none; /* Evita que el texto interfiera con los clicks */
+    transition: transform 0.3s; /* Transición para el texto */
+}
+
+/* Efecto hover para el texto de la mesa */
+.mesa:hover span {
+    transform: scale(1.1); /* Agranda ligeramente el texto */
+}
+
+/* Texto de estado de la mesa */
+.mesa-estado {
+    font-size: 0.7rem;
+    font-weight: normal;
+    opacity: 0.9;
+    transition: all 0.3s;
+}
+
+/* Efecto hover para el estado */
+.mesa:hover .mesa-estado {
+    transform: translateY(3px); /* Mueve hacia abajo */
+    opacity: 1;
+    font-weight: 500;
+}
+
+/* ESTADO DE LAS MESAS */
+.disponible {
+    background: linear-gradient(135deg, #2ecc71, #27ae60); /* Verde */
+}
+
+/* Efecto especial para mesas disponibles al pasar el mouse */
+.disponible:hover {
+    animation: pulse 2s infinite; /* Animación de pulso */
+}
+
+/* Animación de pulso para mesas disponibles */
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.7);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(46, 204, 113, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(46, 204, 113, 0);
+    }
+}
+
+/* POSICIONAMIENTO DE LAS MESAS */
+.mesa-1 { top: 20%; left: 15%; }
+.mesa-2 { top: 20%; left: 35%; }
+.mesa-3 { top: 20%; left: 55%; }
+.mesa-4 { top: 20%; left: 75%; }
+.mesa-5 { top: 50%; left: 15%; }
+.mesa-6 { top: 50%; left: 35%; }
+.mesa-7 { top: 50%; left: 55%; }
+.mesa-8 { top: 50%; left: 75%; }
+
+/* PUNTOS CLAVE DEL RESTAURANTE (entrada, baños, cocina) */
+.punto.clave {
+    position: absolute;
+    padding: 0.5rem 1rem;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Estilos específicos para cada área clave */
+.entrada {
+    background: #3498db; /* Azul */
+    top: 2%;
+    left: 37%;
+    width: 240px;
+    height: 60px;
+}
+
+.baño {
+    background: #543dff; /* Morado */
+    top: 75%;
+    left: 65%;
+    width: 250px;
+    height: 80px;
+}
+
+.cocina {
+    background:#ff0808; /* Rojo */
+    top: 75%;
+    left: 5%;
+    width: 350px;
+    height: 80px;
+}
