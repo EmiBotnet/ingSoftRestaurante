@@ -15,5 +15,16 @@
         "comida": "Cheescake",
         "estado": "Agotado",
         "precio": 999
+    },
+    {
+        "comida": "Tacos al Pastor",
+        "estado": "Agotado",
+        "precio": 127
+    },
+    {
+        "comida": "Agua de Horchata",
+        "estado": "Agotado",
+        "precio": 90
     }
+    
 ]
