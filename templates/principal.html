@@ -55,11 +55,11 @@
 
         <div class="nav-menu-comida">
             <nav class="menu-general">
-                <a href="" class="tipo-comida"> Desayunos </a>
-                <a href="" class="tipo-comida"> Almuerzos </a>
-                <a href="" class="tipo-comida"> Cenas </a>
-                <a href="" class="tipo-comida"> Postres </a>
-                <a href="" class="tipo-comida"> Bebidas </a>
+                <a href="/principal?tipo=Desayuno" class="tipo-comida">Desayunos</a>
+                <a href="/principal?tipo=Almuerzo" class="tipo-comida">Almuerzos</a>
+                <a href="/principal?tipo=Cena" class="tipo-comida">Cenas</a>
+                <a href="/principal?tipo=Postre" class="tipo-comida">Postres</a>
+                <a href="/principal?tipo=Bebida" class="tipo-comida">Bebidas</a>
             </nav>
         </div>
 
@@ -67,10 +67,16 @@
         <div class="contenedor-comida">
             {% for item in menu %}
             <div class="platillo">
-                <h2>{{ item.comida }}</h2>
-                <p><strong>Estado:</strong> {{ item.estado }}</p>
-                <p><strong>Precio:</strong> ${{ item.precio }}</p>
-                 <button class="btn-agregar">Agregar al pedido</button>
+                <img class="imgPlatillo" src="data:image/png;base64,{{ item.foto }}" alt="Imagen de {{ item.nombre }}" width="200">
+                <h2>{{ item.nombre }}</h2>
+                <p>{{ item.descripcion }}</p>
+                <p><strong>$:</strong>{{ item.precio }}</p>
+                <p><strong>Estado:</strong> {% if item.disponible %} Disponible {% else %} No disponible {% endif %}</p>
+                {% if item.disponible %} 
+                <button class="btn-agregar">Agregar al pedido</button>
+            {% else %}
+            <button class="btn-agregar" disabled>Agotado</button>
+            {% endif %}
             </div>
             {% endfor %}
         </div>

@@ -23,20 +23,11 @@
             <h2>¡Bienvenido!</h2>
             <p>¿Antojo de algo delicioso?</p>
             <div class="contenedor-botones">
-                <a class="redir" href="signup.html">Registrate</a>
-                <a class="redir" href="login.html">Iniciar Sesion</a>
+                <a class="redir" href="{{ url_for('signup') }}">Registrate</a>
+                <a class="redir" href="{{ url_for('login') }}">Iniciar Sesion</a>
+                <a class="redir" href="/invitado-directo">Invitado</a> 
             </div>
         </div>
-        <div class="btnInvitado-contenedor">
-                    <!-- Enlace funcional para Invitado -->
-                    <form action="/login" method="POST" style="display: inline;">
-                        <input type="hidden" name="usuario" value="invitado1">
-                        <input type="hidden" name="password" value="guest1">
-                        <button class="btnInvitado" type="submit" class="redir invitado">
-                            Invitado
-                        </button>
-                    </form>
-                </div>
     </div>
     <script src="../static/JavaScript/index.js"></script>
 </body>
