@@ -1,5 +1,4 @@
 from flask import Flask, render_template, request, redirect, url_for, session
-import json
 import pyodbc  # Necesario para conectar a SQL Server
 import base64
 from werkzeug.security import generate_password_hash
