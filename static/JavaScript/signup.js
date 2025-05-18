@@ -1,13 +1,14 @@
-document.getElementById("signupForm").addEventListener("submit", function(event) {
-    event.preventDefault();
+// Espera que el DOM esté completamente cargado
+window.addEventListener('DOMContentLoaded', () => {
+    const form = document.getElementById("signupForm");
 
-    let password = document.getElementById("password").value;
-    let confirmPassword = document.getElementById("confirmPassword").value;
+    form.addEventListener("submit", function (event) {
+        const password = document.querySelector('input[name="password"]').value;
+        const confirmPassword = document.querySelector('input[name="confirmPassword"]').value;
 
-    if (password !== confirmPassword) {
-        alert("Las contraseñas no coinciden.");
-    } else {
-        alert("Cuenta creada con éxito.");
-        this.reset(); // Limpia el formulario
-    }
+        if (password !== confirmPassword) {
+            event.preventDefault(); // Detiene el envío del formulario
+            alert("Las contraseñas no coinciden.");
+        }
+    });
 });

@@ -2,6 +2,7 @@ from flask import Flask, render_template, request, redirect, url_for, session
 import json
 import pyodbc  # Necesario para conectar a SQL Server
 import base64
+from werkzeug.security import generate_password_hash
 
 # Usar comando "python app.py" para inicializar el servidor
 
@@ -42,13 +43,17 @@ def signup():
         telefono = request.form['phone']
         direccion = request.form['address']
         contraseña = request.form['password']
-        confContraseña = request.form['ConfirmPassword']
+        confContraseña = request.form['confirmPassword']
         #Definir rol por defecto
+        rol = 'cliente'
         
 
         #Validar contraseña
         if contraseña != confContraseña:
             return "Las contraseñas no coinciden"
+        
+         # Hashear la contraseña antes de guardarla
+        contraseña_hash = generate_password_hash(contraseña)
     
         try:
             conn = get_db_connection()
@@ -58,7 +63,7 @@ def signup():
             cursor.execute("""
                 INSERT INTO Usuarios (Nombre_Usuario, Correo, Telefono, Direccion, Contrasena, Rol)
                 VALUES (?, ?, ?, ?, ?, ?)
-            """, (nombre, email, telefono, direccion, contraseña, rol))
+            """, (nombre, email, telefono, direccion, contraseña_hash, rol))
 
             conn.commit()
             conn.close() 
