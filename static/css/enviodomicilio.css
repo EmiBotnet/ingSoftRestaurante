@@ -1,0 +1,141 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+}
+
+/* Barra superior */
+.top-bar {
+    background-color: #f89c1c;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    color: black;
+    font-size: 18px;
+}
+
+
+/* Contenedor de pago */
+.payment-container {
+    width: 80%;
+    margin: 20px auto;
+    padding: 30px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column; /* Cambiamos a columna para ordenar verticalmente */
+    align-items: stretch; /* Estiramos los elementos hijos a lo ancho */
+}
+
+.payment-header {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.payment-content { /* Nuevo contenedor para formulario y método de pago */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+}
+
+#payment-form {
+    width: 60%;
+    display: flex;
+    flex-direction: column;
+}
+
+#payment-form h3 {
+    margin-bottom: 10px;
+}
+
+/* Inputs */
+#payment-form input[type="text"],
+#payment-form input[type="email"] {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-sizing: border-box;
+}
+
+#payment-form .small-inputs {
+    display: flex;
+    gap: 10px;
+}
+
+#payment-form .small-inputs input {
+    flex: 1;
+}
+
+/* Métodos de pago */
+.payment-methods-container {
+    width: 35%;
+    padding: 20px;
+    background-color: white;
+    border-radius: 5px;
+    align-self: flex-start; /* Alineamos la parte superior con el formulario */
+}
+
+.payment-methods-container h3 {
+    text-align: right;
+    margin-top: 0;
+    margin-bottom: 15px;
+}
+
+.payment-methods {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.payment-methods label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.payment-methods input[type="radio"] {
+    margin-left: 5px;
+}
+
+.payment-icon {
+    width: 25px;
+    vertical-align: middle;
+    margin-left: 8px;
+}
+
+
+.payment-container > button { /* Estilo para el botón directamente dentro del contenedor */
+    background: #007bff;
+    color: white;
+    padding: 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    width: 100%; /* El botón ocupa todo el ancho */
+    margin-top: 20px; /* Espacio superior */
+}
+
+.payment-container > button:hover {
+    background: #0056b3;
+}
+
+.btn-login {
+    background-color: #007bff;
+    color: white;
+    padding: 0.5rem 1rem;
+    text-decoration: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    transition: background-color 0.3s ease;
+}
+
+.btn-login:hover {
+    background-color: #0056b3;
+}
