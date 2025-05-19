@@ -3,52 +3,63 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pago en Línea - Cuatro Estaciones</title>
-    <link rel="stylesheet" href="css/pagoLinea.css">
+    <link rel="stylesheet" href="../static/css/principal.css">
+    <!-- <link rel="stylesheet" href="css/principal.css"> -->
+    <!--Archivo de normalización (NO TOCAR)-->
+    <link rel="stylesheet" href="../static/css/normalize.css">
+    <!--Fonts-->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cascadia+Mono:ital,wght@0,200..700;1,200..700&display=swap"
+        rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Cascadia+Mono:ital,wght@0,200..700;1,200..700&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+        rel="stylesheet">
+
+    <title>Pago en Linea - Cuatro Estaciones</title>
 </head>
 <body>
-    <header>
-        <div class="top-bar">
-            <span class="menu-icon">☰</span>
-            <h1>Restaurante: <em>"Cuatro estaciones"</em></h1>
-            <div class="icons">
-                <span class="cart-icon" >🛒</span>
-                <span class="user-icon"><a href="perfil.html">👤</a></span>
-            </div>
-        </div>
-    </header>
-
-    <div class="payment-container">
-        <div class="payment-header">
-            <span class="card-icon">💳</span>
-            <h2>Pago en línea</h2>
-        </div>
-
-        <form id="payment-form">
-            <h3>Datos de tarjeta</h3>
-            <div class="card-logos">
-                <img src="imagenes/visa.png" alt="Visa">
-                <img src="imagenes/mastercard.png" alt="MasterCard">
-                <img src="imagenes/american-express.png" alt="American Express">
-            </div>
-
-            <input type="text" placeholder="Nombre(s) del titular" required>
-            <input type="text" placeholder="Apellidos del titular" required>
-            <input type="text" placeholder="Número de tarjeta" required maxlength="16">
-            
-            <div class="small-inputs">
-                <input type="text" placeholder="Expiración (MM/AA)" required maxlength="5">
-                <input type="text" placeholder="Clave de seguridad" required maxlength="3">
-                <input type="text" placeholder="Código postal" required>
-            </div>
-
-            <input type="email" placeholder="Email" required>
-            <input type="tel" placeholder="Teléfono" required>
-
-            <button type="submit">Pagar</button>
-        </form>
+    <main class="contenedor">
+    <!-- Fondo de pantalla -->
+    <div class="fondo-imagen">
+        <img src="../static/img/fondoIndex.jpg" alt="fondoIndex.jpg">
     </div>
 
-    <script src="JavaScript/pagoLinea.js"></script>
+    <!-- Contenedor centrado -->
+    <div class="centrar-contenido">
+        <!-- Header y formulario -->
+        <header>
+            <div class="nombre-empresa">
+                <a class="nombre-empresa_texto" href="#">Restaurante: "Cuatro Estaciones"</a>
+            </div>
+            <form id="payment-form">
+                <h3>Datos de tarjeta</h3>
+                <div class="card-logos">
+                    <img src="imagenes/visa.png" alt="Visa">
+                    <img src="imagenes/mastercard.png" alt="MasterCard">
+                    <img src="imagenes/american-express.png" alt="American Express">
+                </div>
+
+                <input type="text" placeholder="Nombre(s) del titular" required>
+                <input type="text" placeholder="Apellidos del titular" required>
+                <input type="text" placeholder="Número de tarjeta" required maxlength="16">
+
+                <div class="small-inputs">
+                    <input type="text" placeholder="Expiración (MM/AA)" required maxlength="5">
+                    <input type="text" placeholder="Clave de seguridad" required maxlength="3">
+                    <input type="text" placeholder="Código postal" required>
+                </div>
+
+                <input type="email" placeholder="Email" required>
+                <input type="tel" placeholder="Teléfono" required>
+
+                <button type="submit">Pagar</button>
+            </form>
+        </header>
+    </div>
+          <script src="JavaScript/pagoLinea.js"></script>
+    </main>
 </body>
 </html>

@@ -1,88 +1,92 @@
-body {
-    font-family: Arial, sans-serif;
+/*Generales*/
+:root{
+--fuente_principal: "Cascadia Mono", sans-serif;
+--fuente_secundario: "Playfair Display", serif;
+--fuente_tercearia: Arial, sans-serif;
+--estilo_terceario: italic;
+--color_principal: #f89c1c;
+--color_secundario: #e6b672; 
+--color_terceario: #f0cd9d;
+}*/
+
+html, body {
+    height: 100%;
     margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
+    font-family: Arial, sans-serif;
 }
 
-/* Barra superior */
-.top-bar {
-    background-color: #f89c1c;
+.contenedor {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
-    padding: 15px 20px;
-    color: black;
-    font-size: 18px;
+    height: 100vh;
+    position: relative;
+    padding: 20px; /* espacio interno en pantallas pequeñas */
+    box-sizing: border-box;
 }
 
-.menu-icon, .cart-icon, .user-icon {
-    font-size: 24px;
-    cursor: pointer;
+.fondo-imagen img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -1;
 }
 
-/* Contenedor de pago */
-.payment-container {
-    width: 60%;
-    margin: 20px auto;
-    background: white;
+.centrar-contenido {
+    z-index: 1;
+    background-color: rgba(255, 255, 255, 0.95);
     padding: 30px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    border-radius: 10px;
+    border-radius: 12px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+    width: 100%;
+    max-width: 500px;
 }
 
-.payment-header {
+#payment-form {
     display: flex;
-    align-items: center;
-    font-size: 24px;
-    font-weight: bold;
+    flex-direction: column;
+    gap: 12px;
 }
 
-.card-icon {
-    font-size: 32px;
-    margin-right: 10px;
-}
-
-.card-logos img {
-    width: 50px;
-    margin-right: 10px;
-}
-
-h3 {
+.card-logos {
+    display: flex;
+    gap: 10px;
     margin-bottom: 10px;
 }
 
-/* Inputs */
-input {
-    width: 100%;
-    padding: 10px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
+.card-logos img {
+    height: 30px;
 }
 
 .small-inputs {
     display: flex;
+    flex-wrap: wrap;
     gap: 10px;
 }
 
 .small-inputs input {
-    flex: 1;
+    flex: 1 1 30%;
+    min-width: 100px;
 }
 
-/* Botón de pago */
-button {
-    background: #007bff;
-    color: white;
+input, button {
     padding: 10px;
-    margin: 10px 0;
-    border: none;
-    border-radius: 5px;
+    font-size: 1rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
     cursor: pointer;
-    font-size: 18px;
-    width: 100%;
+    border: none;
+    transition: background-color 0.3s ease;
 }
 
 button:hover {
-    background: #0056b3;
+    background-color: #45a049;
 }
