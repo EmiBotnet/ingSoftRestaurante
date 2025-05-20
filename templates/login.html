@@ -24,16 +24,18 @@
           <h2>Inicia sesión.</h2>
           <p>
             Si todavía no tienes una cuenta
-            <a href="signup.html">regístrate aquí.</a>
+            <a href="{{ url_for('login') }}">regístrate aquí.</a>
           </p>
 
           <div class="formulario-cont">
             <form action="/login" method="POST" class="formulario">
-                <input name="usuario" type="text" placeholder="Nombre de usuario" required />
+                <input name="usuario" type="text" placeholder="Primer Nombre" required />
                 <input name="email" type="email"placeholder="Dirección de correo electrónico"required/>
                 <input name="password" type="password" placeholder="Contraseña" required />
-                <button type="submit"> ¡A comer! </button>
+                <div class="botonesConf">
+                  <button type="submit"> ¡A comer! </button>
                 <button type="submit"> Volver </button>
+                </div>
               </form>
           </div>
         </div>

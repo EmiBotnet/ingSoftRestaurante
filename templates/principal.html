@@ -34,11 +34,11 @@
         <div class="nav-contenedor">
             <header>
                 <div class="nombre-empresa">
-                    <a class="nombre-empresa_texto" href="#">Restaurante: "Cuatro Estaciones"</a>
+                    <a class="nombre-empresa_texto" href="{{ url_for('principal') }}">Restaurante: "Cuatro Estaciones"</a>
                 </div>
                 <div class="nav_subcontenedor">
                     <nav class="nav-principal">
-                        <a class="nav-enlace" href="#">Reservaciones</a>
+                        <a class="nav-enlace" href="{{ url_for('reservaciones') }}">Reservaciones</a>
                         <a class="nav-enlace" href="#">Delivery</a>
                         <a class="nav-enlace" href="#">Contactanos</a>
                         <a class="nav-enlace" href="#">Nosotros</a>

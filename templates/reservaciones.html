@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>Reservaciones</title> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reservaciones</title>
     <link rel="stylesheet" href="../static/css/reservaciones.css">
 </head>
 
@@ -15,17 +16,16 @@
             <div class="nombre-empresa">
                 <a class="nombre-empresa_texto" href="#">Restaurante: "Cuatro Estaciones"</a>
             </div>
-            
+
             <!-- Contenedor del menú de navegación -->
             <div class="nav_subcontenedor">
                 <!-- Menú principal -->
                 <nav class="nav-principal">
-                    <a class="nav-enlace" href="#">Reservaciones</a>
+                    <a class="nav-enlace" href="{{ url_for('principal')}}">Menú</a>
                     <a class="nav-enlace" href="#">Delivery</a>
                     <a class="nav-enlace" href="#">Contactanos</a>
-                    <a class="nav-enlace" href="#">Nosotros</a>
                 </nav>
-                
+
                 <!-- Icono de menú (para versión móvil) -->
                 <div class="nav_menu-img">
                     <a href="#"><img class="nav_enlace-menu" src="../static/img/icons8-menú.svg" alt="icono_menu"></a>
@@ -38,16 +38,7 @@
     <div class="contenedor-principal">
         <!-- Barra superior con información de fecha/hora -->
         <header class="barra-superior">
-            <div class="info-tiempo">
-                <span class="fecha-info">
-                    <!-- Espacios para mostrar dinámicamente la fecha/hora -->
-                    <span id="dia-semana">Martes</span>,
-                    <span id="fecha">25 de junio de 2024</span> - 
-                    <span id="hora">14:30:45</span>
-                </span>
-                <!-- Selector de fecha para filtrar reservaciones -->
-                <input type="date" id="selector-fecha" class="selector-fecha">
-            </div>
+
         </header>
 
         <!-- Contenido principal dividido en dos columnas -->
@@ -58,86 +49,55 @@
                 <div class="seccion-busqueda">
                     <h2 class="titulo-seccion">Reservaciones</h2>
                     <div class="grupo-busqueda">
-                       
+
                     </div>
                 </div>
 
                 <!-- Lista de reservaciones -->
                 <div class="lista-reservas">
                     <!-- Ejemplo de item de reserva -->
+                     {% for reserva in reservas %}
                     <div class="reserva-item">
                         <div class="reserva-header">
-                            <h3>Ana Rodríguez</h3> <!-- Nombre del cliente -->
-                            <span class="reserva-hora"> 22/05/2025-8:30 pm</span> <!-- Fecha y hora -->
+                            <h3>{{ reserva.Fecha_reserva }}</h3> <!-- Nombre del cliente -->
+                            <span class="reserva-hora"> {{ reserva.Hora_reserva }} </span> <!-- Fecha y hora -->
                         </div>
                         <div class="reserva-detalle">
-                            <span>4 personas</span> <!-- Número de comensales -->
-                            <span>Mesa 3</span> <!-- Mesa asignada -->
+                            <span>Mesa {{ reserva.id_mesa }}</span> <!-- Mesa asignada -->
                             <span class="reserva-notas">Reservado</span> <!-- Estado -->
                         </div>
                     </div>
+                    {% endfor %}
                     <!-- Botón para regresar (podría cerrar detalles de reserva) -->
                     <button class="btn-regresar">Regresar</button>
                 </div>
             </aside>
-            
+
             <!-- Área derecha - Mapa del restaurante -->
             <main class="area-mesas">
                 <h1 class="titulo-mapa">Distribución del Restaurante</h1>
-                
+
                 <!-- Contenedor del mapa con mesas y áreas clave -->
                 <div class="mapa-restaurante">
                     <!-- Mesas del restaurante (8 en total) -->
                     <!-- Cada mesa es un círculo con información -->
-                    <div class="mesa mesa-1 disponible" data-mesa="1">
-                        <span>Mesa 1</span>
-                        <span class="mesa-estado">Disponible</span>
+                    {% for mesa in mesas %}
+                    <div class="mesa mesa-{{ mesa.id }} {{ 'disponible' if mesa.disponible else 'ocupada' }}"
+                        data-mesa="{{ mesa.id }}">
+                        <span>Mesa {{ mesa.id }}</span>
+                        <span class="mesa-estado">{{ 'Disponible' if mesa.disponible else 'Ocupada' }}</span>
                     </div>
-                    
-                    <div class="mesa mesa-2 disponible" data-mesa="2">
-                        <span>Mesa 2</span>
-                        <span class="mesa-estado">Disponible</span>
-                    </div>
-                    
-                    <div class="mesa mesa-3 disponible" data-mesa="3">
-                        <span>Mesa 3</span>
-                        <span class="mesa-estado">Disponible</span>
-                    </div>
-                    
-                    <div class="mesa mesa-4 disponible" data-mesa="4">
-                        <span>Mesa 4</span>
-                        <span class="mesa-estado">Disponible</span>
-                    </div>
-                    
-                    <div class="mesa mesa-5 disponible" data-mesa="5">
-                        <span>Mesa 5</span>
-                        <span class="mesa-estado">Disponible</span>
-                    </div>
-                    
-                    <div class="mesa mesa-6 disponible" data-mesa="6">
-                        <span>Mesa 6</span>
-                        <span class="mesa-estado">Disponible</span>
-                    </div>
-                    
-                    <div class="mesa mesa-7 disponible" data-mesa="7">
-                        <span>Mesa 7</span>
-                        <span class="mesa-estado">Disponible</span>
-                    </div>
-                    
-                    <div class="mesa mesa-8 disponible" data-mesa="8">
-                        <span>Mesa 8</span>
-                        <span class="mesa-estado">Disponible</span>
-                    </div>
-                    
+                    {% endfor %}
+
                     <!-- Áreas importantes del restaurante -->
                     <div class="punto clave entrada">
                         <span>Entrada principal</span>
                     </div>
-                    
+
                     <div class="punto clave baño">
                         <span>Baños</span>
                     </div>
-                    
+
                     <div class="punto clave cocina">
                         <span>Cocina</span>
                     </div>
@@ -145,5 +105,44 @@
             </main>
         </div>
     </div>
+    <script src="../static/JavaScript/modalReservacion.js"></script>
+
+{% if session.get('id_cliente') %}
+  
+<!-- Modal mesa -->
+<div id="modal-mesa" class="modal">
+    <div class="modal-contenido">
+        <span class="cerrar">&times;</span>
+        <h2 id="info-mesa">Reservar Mesa</h2>
+
+        <form action="{{ url_for('crear_reservacion') }}" method="POST" class="form-reserva">
+            <!-- Fecha -->
+            <label for="fecha_reserva">Fecha:</label>
+            <input type="date" id="fecha_reserva" name="fecha_reserva" required>
+
+            <!-- Hora -->
+            <label for="hora_reserva">Hora:</label>
+            <input type="time" id="hora_reserva" name="hora_reserva" required>
+
+            <!-- ID Mesa (lo rellena JS) -->
+            <input type="hidden" id="id_mesa" name="id_mesa">
+
+            <!-- Botón enviar -->
+            <button type="submit" class="btn-confirmar">Confirmar Reserva</button>
+        </form>
+        <button class="btn-cerrar">Cerrar</button>
+    </div>
+</div>
+
+  <form action="{{ url_for('crear_reservacion') }}" method="POST" class="form-reserva">
+    <!-- campos -->
+  </form>
+{% else %}
+  <p>Debe iniciar sesión para reservar mesa.</p>
+{% endif %}
+
+
+
 </body>
+
 </html>

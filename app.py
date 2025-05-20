@@ -1,7 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import pyodbc  # Necesario para conectar a SQL Server
 import base64
-from werkzeug.security import generate_password_hash
+from werkzeug.security import generate_password_hash, check_password_hash
 
 # Usar comando "python app.py" para inicializar el servidor
 
@@ -37,12 +37,16 @@ def signup():
 
     #Obtener los valores ingresados en los campos del frontend
     if request.method == 'POST':
-        nombre = request.form['name']
-        email = request.form['email']
-        telefono = request.form['phone']
+        primerNombre = request.form['firstName']
+        segundoNombre = request.form['secondName']
+        primerApellido = request.form['lastName']
+        segundoApellido = request.form['secondLastName']
         direccion = request.form['address']
+        telefono = request.form['phone']
+        email = request.form['email']
         contraseña = request.form['password']
         confContraseña = request.form['confirmPassword']
+        
         #Definir rol por defecto
         rol = 'cliente'
         
@@ -60,9 +64,12 @@ def signup():
 
             #Query para registrar usuario
             cursor.execute("""
-                INSERT INTO Usuarios (Nombre_Usuario, Correo, Telefono, Direccion, Contrasena, Rol)
-                VALUES (?, ?, ?, ?, ?, ?)
-            """, (nombre, email, telefono, direccion, contraseña_hash, rol))
+            INSERT INTO Clientes (
+                Prim_nom_cli, Seg_nom_cli, Prim_ape_cli, Seg_ape_cli,
+                Dir_cliente, Num_tel_clie, Correo_electronico, Contraseña
+            )
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+            """, (primerNombre, segundoNombre, primerApellido, segundoApellido, direccion, telefono, email, contraseña_hash))
 
             conn.commit()
             conn.close() 
@@ -78,47 +85,52 @@ def signup():
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
-    if request.method == 'GET':
-        # Mostrar formulario de login
-        return render_template('login.html')
-
-    elif request.method == 'POST':
-        usuario = request.form['usuario']
+    if request.method == 'POST':
+        email = request.form['email']
         password = request.form['password']
 
-        try:
-            conn = get_db_connection()
-            cursor = conn.cursor()
+        conn = get_db_connection()
+        cursor = conn.cursor()
 
-            cursor.execute("""
-                SELECT Nombre_Usuario, Contrasena, Rol
-                FROM Usuarios
-                WHERE Nombre_Usuario = ? AND Contrasena = ?
-            """, (usuario, password))
+        # 1. Verificar si el correo pertenece a un Cliente
+        cursor.execute("""
+            SELECT Id_Cliente, Prim_nom_cli, Contraseña
+            FROM Clientes
+            WHERE Correo_electronico = ?
+            """, (email,))
+        cliente = cursor.fetchone()
 
-            user = cursor.fetchone()
-
-            if user:
-                session['usuario'] = user.Nombre_Usuario  # Asignar correctamente
-                session['rol'] = user.Rol
-
-                if user.Rol == 'cliente':
-                    return redirect('/cliente')
-                elif user.Rol == 'admin':
-                    return redirect('/admin')
-                elif user.Rol == 'mesero':
-                    return redirect('/mesero')
-                elif user.Rol == 'invitado':
-                    return redirect('/invitado')
+        
+        if cliente:
+            id_cliente, nombre_cliente, hashed_password = cliente
+            if check_password_hash(hashed_password, password):
+                session['usuario_tipo'] = 'cliente'
+                session['usuario_nombre'] = nombre_cliente
+                session['id_cliente'] = id_cliente  # <-- Aquí guardas el id del cliente
+                return redirect(url_for('cliente'))
             else:
-                return "Credenciales incorrectas"
+                return "Contraseña incorrecta para cliente", 401
 
-        except Exception as e:
-            return f"Error en la consulta de usuario: {e}"
+        # 2. Verificar si el correo pertenece a un Empleado
+        cursor.execute("""
+            SELECT Id_Empleado, Contraseña
+            FROM Empleado
+            WHERE Correo_electronico = ?
+        """, (email,))
+        empleado = cursor.fetchone()
 
-        #Cerrar la conexión con la bd
-        finally:
-            conn.close()
+        if empleado:
+            id_empleado, hashed_password = empleado
+            if check_password_hash(hashed_password, password):
+                # Aquí puedes guardar sesión si quieres
+                return redirect(url_for('empleado_dashboard'))
+            else:
+                return "Contraseña incorrecta para empleado", 401
+
+        conn.close()
+        return "Correo no encontrado", 404
+
+    return render_template('login.html')
 
 #Ruta a principal.html
 @app.route('/principal')
@@ -164,12 +176,93 @@ def principal():
 
     return render_template('principal.html', menu=menu, rol=rol)
 
+@app.route('/reservaciones')
+def reservaciones():
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        # Obtener las mesas
+        cursor.execute("SELECT Id_mesa, Is_empty FROM Mesas")
+        mesas = cursor.fetchall()
+
+        datos_mesas = []
+        for mesa in mesas:
+            datos_mesas.append({
+                'id': mesa[0],
+                'disponible': bool(mesa[1])
+            })
+
+        # Obtener las reservaciones (aquí se arregla todo)
+        cursor.execute("""
+            SELECT Fecha_reserva, Hora_reserva, Id_mesa
+            FROM Reservacion_mesa
+            WHERE Id_cliente = ?
+        """, (session.get('id_cliente'),))  
+        reservaciones = cursor.fetchall()
+
+        # Convertir a lista de diccionarios si es necesario
+        reservas_lista = []
+        for r in reservaciones:
+            reservas_lista.append({
+                'Fecha_reserva': r[0],
+                'Hora_reserva': r[1],
+                'id_mesa': r[2]
+            })
+
+    except Exception as e:
+        return f"Error al obtener datos: {e}", 500
+
+    finally:
+        conn.close()
+
+    # Aquí SÍ se pasa 'reservas' al template
+    return render_template('reservaciones.html', mesas=datos_mesas, reservas=reservas_lista)
+
+
+@app.route('/crear_reservacion', methods=['POST'])
+def crear_reservacion():
+    if 'id_cliente' not in session:
+        print("⚠️ No hay sesión activa. Redirigiendo o bloqueando.")
+        return "Debe iniciar sesión para hacer una reservación", 401
+
+    id_cliente = session['id_cliente']
+    fecha = request.form['fecha_reserva']
+    hora = request.form['hora_reserva']
+    id_mesa = request.form['id_mesa']
+
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        # Insertar reservación
+        cursor.execute("""
+            INSERT INTO Reservacion_mesa (Fecha_reserva, Hora_reserva, Id_cliente, Id_mesa)
+            VALUES (?, ?, ?, ?)
+        """, (fecha, hora, id_cliente, id_mesa))
+
+        # Actualizar mesa a ocupada
+        cursor.execute("""
+            UPDATE Mesas
+            SET Is_empty = 0
+            WHERE Id_mesa = ?
+        """, (id_mesa,))
+
+        conn.commit()
+        return redirect(url_for('reservaciones'))
+
+    except Exception as e:
+        return f"Error al registrar reservación: {e}", 500
+
+    finally:
+        conn.close()
+
 
 #Rutas de roles
 @app.route('/cliente')
 def cliente():
-    if session.get('rol') == 'cliente':
-        return render_template('principal.html')
+    if session.get('usuario_tipo') == 'cliente':
+        return redirect(url_for('principal'))
     return "Acceso denegado"
 
 @app.route('/admin')
