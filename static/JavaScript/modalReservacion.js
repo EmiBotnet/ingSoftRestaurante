@@ -1,49 +1,50 @@
 document.addEventListener('DOMContentLoaded', () => {
-  // Función para mostrar el modal
-  function mostrarModal(numeroMesa) {
-    const modal = document.getElementById('modal-mesa');
-    const info = document.getElementById('info-mesa');
-    info.textContent = `Mesa ${numeroMesa}`;
+  const modal = document.getElementById('modal-mesa');
+  const info = document.getElementById('info-mesa');
+  const idMesaInput = document.getElementById('id_mesa');
+  const btnCerrar = document.querySelector('.btn-cerrar');
+  const btnX = document.querySelector('.cerrar');
+  const form = document.querySelector('.form-reserva');
+  const btnConfirmar = document.querySelector('.btn-confirmar');
 
-    // 👇 Aquí asignamos el id de la mesa al input oculto del formulario
-    document.getElementById('id_mesa').value = numeroMesa;
+  // Mostrar el modal solo si la mesa está disponible
+  document.querySelectorAll('.mesa').forEach(mesa => {
+    mesa.addEventListener('click', () => {
+      if (mesa.classList.contains('ocupada')) {
+        alert("⚠️ Esta mesa ya está reservada. Por favor, elige otra.");
+        return;
+      }
 
-    modal.classList.add('activo'); // Mostrar con clase
-  }
+      const numeroMesa = mesa.dataset.mesa;
+      info.textContent = `Reservar Mesa ${numeroMesa}`;
+      idMesaInput.value = numeroMesa;
 
-  // Evento para cerrar el modal con la X
-  document.querySelector('.cerrar').addEventListener('click', () => {
-    document.getElementById('modal-mesa').classList.remove('activo');
+      modal.classList.add('activo'); // Usamos clase para mostrar
+    });
   });
 
-  // Evento para cerrar al hacer clic fuera del contenido
-  window.addEventListener('click', function (e) {
-    const modal = document.getElementById('modal-mesa');
+  // Cerrar el modal con botón X, botón "Cerrar", o clic fuera del contenido
+  btnX.addEventListener('click', () => {
+    modal.classList.remove('activo');
+  });
+
+  btnCerrar.addEventListener('click', () => {
+    modal.classList.remove('activo');
+  });
+
+  window.addEventListener('click', (e) => {
     if (e.target === modal) {
       modal.classList.remove('activo');
     }
   });
 
-  // Escuchar clic en cada mesa
-  document.querySelectorAll('.mesa').forEach(mesa => {
-    mesa.addEventListener('click', function () {
-      const numeroMesa = this.dataset.mesa;
-      mostrarModal(numeroMesa); // Llama la función con el número de mesa
-    });
+  // Confirmar reserva (opcional: validaciones adicionales antes de enviar)
+  btnConfirmar.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    // Podrías validar aquí fecha/hora si quieres
+    alert("✅ ¡Reservación realizada con éxito!");
+    form.submit();
   });
-
-  // Evento para cerrar con el botón "Cerrar"
-  document.querySelector('.btn-cerrar').addEventListener('click', () => {
-    document.getElementById('modal-mesa').classList.remove('activo');
-  });
-
-  document.querySelector('.btn-confirmar').addEventListener('click', (e) => {
-    e.preventDefault(); // Evita que se envíe de inmediato
-
-    alert("Reservación realizada!");
-
-    // Luego, envía el formulario manualmente si todo está bien
-    document.querySelector('.form-reserva').submit();
-  });
-
 });
+

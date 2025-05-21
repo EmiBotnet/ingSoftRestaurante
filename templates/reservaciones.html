@@ -56,20 +56,28 @@
                 <!-- Lista de reservaciones -->
                 <div class="lista-reservas">
                     <!-- Ejemplo de item de reserva -->
-                     {% for reserva in reservas %}
+                    {% for reserva in reservas %}
                     <div class="reserva-item">
                         <div class="reserva-header">
-                            <h3>{{ reserva.Fecha_reserva }}</h3> <!-- Nombre del cliente -->
-                            <span class="reserva-hora"> {{ reserva.Hora_reserva }} </span> <!-- Fecha y hora -->
+                            <h3>{{ reserva.Fecha_reserva }}</h3>
+                            <span class="reserva-hora">{{ reserva.Hora_reserva }}</span>
                         </div>
                         <div class="reserva-detalle">
-                            <span>Mesa {{ reserva.id_mesa }}</span> <!-- Mesa asignada -->
-                            <span class="reserva-notas">Reservado</span> <!-- Estado -->
+                            <span>Mesa {{ reserva.id_mesa }}</span>
+                            <span class="reserva-notas">Reservado</span>
                         </div>
+
+                        <!-- Botón para cancelar reservación -->
+                        <form action="{{ url_for('eliminar_reservacion') }}" method="POST"
+                            onsubmit="return confirm('¿Seguro que deseas cancelar esta reservación?')">
+                            <input type="hidden" name="id_mesa" value="{{ reserva.id_mesa }}">
+                            <input type="hidden" name="fecha" value="{{ reserva.Fecha_reserva }}">
+                            <input type="hidden" name="hora" value="{{ reserva.Hora_reserva }}">
+                            <button type="submit" class="btn-cancelar">Cancelar</button>
+                        </form>
                     </div>
                     {% endfor %}
-                    <!-- Botón para regresar (podría cerrar detalles de reserva) -->
-                    <button class="btn-regresar">Regresar</button>
+
                 </div>
             </aside>
 
@@ -107,41 +115,36 @@
     </div>
     <script src="../static/JavaScript/modalReservacion.js"></script>
 
-{% if session.get('id_cliente') %}
-  
-<!-- Modal mesa -->
-<div id="modal-mesa" class="modal">
-    <div class="modal-contenido">
-        <span class="cerrar">&times;</span>
-        <h2 id="info-mesa">Reservar Mesa</h2>
+    {% if session.get('id_cliente') %}
+    <!-- Modal mesa -->
+    <div id="modal-mesa" class="modal">
+        <div class="modal-contenido">
+            <span class="cerrar">&times;</span>
+            <h2 id="info-mesa">Reservar Mesa</h2>
 
-        <form action="{{ url_for('crear_reservacion') }}" method="POST" class="form-reserva">
-            <!-- Fecha -->
-            <label for="fecha_reserva">Fecha:</label>
-            <input type="date" id="fecha_reserva" name="fecha_reserva" required>
+            <form action="{{ url_for('crear_reservacion') }}" method="POST" class="form-reserva">
+                <!-- Fecha -->
+                <label for="fecha_reserva">Fecha:</label>
+                <input type="date" id="fecha_reserva" name="fecha_reserva" required>
 
-            <!-- Hora -->
-            <label for="hora_reserva">Hora:</label>
-            <input type="time" id="hora_reserva" name="hora_reserva" required>
+                <!-- Hora -->
+                <label for="hora_reserva">Hora:</label>
+                <input type="time" id="hora_reserva" name="hora_reserva" required>
 
-            <!-- ID Mesa (lo rellena JS) -->
-            <input type="hidden" id="id_mesa" name="id_mesa">
+                <!-- ID Mesa (esto lo rellena el JS al dar clic en una mesa disponible) -->
+                <input type="hidden" id="id_mesa" name="id_mesa">
 
-            <!-- Botón enviar -->
-            <button type="submit" class="btn-confirmar">Confirmar Reserva</button>
-        </form>
-        <button class="btn-cerrar">Cerrar</button>
+                <!-- Botón enviar -->
+                <button type="submit" class="btn-confirmar">Confirmar Reserva</button>
+            </form>
+
+            <!-- Botón cerrar modal -->
+            <button class="btn-cerrar">Cerrar</button>
+        </div>
     </div>
-</div>
-
-  <form action="{{ url_for('crear_reservacion') }}" method="POST" class="form-reserva">
-    <!-- campos -->
-  </form>
-{% else %}
-  <p>Debe iniciar sesión para reservar mesa.</p>
-{% endif %}
-
-
+    {% else %}
+    <p>Debe iniciar sesión para reservar mesa.</p>
+    {% endif %}
 
 </body>
 

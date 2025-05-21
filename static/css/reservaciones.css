@@ -494,6 +494,19 @@ header{
     background-color: #3a9e3f;
 }
 
+.btn-cancelar {
+    margin-top: 10px;
+    padding: 6px 12px;
+    background-color: #d9534f;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.btn-cancelar:hover {
+    background-color: #c9302c;
+}
 
 /* Animaciones */
 @keyframes fadeIn {

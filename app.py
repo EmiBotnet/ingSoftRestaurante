@@ -257,6 +257,40 @@ def crear_reservacion():
     finally:
         conn.close()
 
+@app.route('/eliminar_reservacion', methods=['POST'])
+def eliminar_reservacion():
+    if 'id_cliente' not in session:
+        return "No autorizado", 401
+    
+    id_mesa = request.form['id_mesa']
+    fecha = request.form['fecha']
+    hora = request.form['hora']
+
+    try:
+        conn = get_db_connection()
+        cursor = conn.cursor()
+    
+        # 1. Eliminar reservación
+        cursor.execute("""
+            DELETE FROM Reservacion_mesa
+            WHERE Id_mesa = ? AND Fecha_reserva = ? AND Hora_reserva = ? AND Id_cliente = ?
+        """, (id_mesa, fecha, hora, session['id_cliente']))
+
+         # 2. Marcar la mesa como disponible
+        cursor.execute("""
+            UPDATE Mesas
+            SET Is_empty = 1
+            WHERE Id_mesa = ?
+        """, (id_mesa,))
+
+        conn.commit()
+        return redirect(url_for('reservaciones'))
+
+    except Exception as e:
+        return f"Error al eliminar reservación: {e}", 500
+
+    finally:
+        conn.close()
 
 #Rutas de roles
 @app.route('/cliente')
