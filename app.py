@@ -176,6 +176,7 @@ def principal():
 
     return render_template('principal.html', menu=menu, rol=rol)
 
+#Ruta a reservaciones
 @app.route('/reservaciones')
 def reservaciones():
     try:
@@ -219,7 +220,7 @@ def reservaciones():
     # Aquí SÍ se pasa 'reservas' al template
     return render_template('reservaciones.html', mesas=datos_mesas, reservas=reservas_lista)
 
-
+#Ruta al modal crear_reservacion
 @app.route('/crear_reservacion', methods=['POST'])
 def crear_reservacion():
     if 'id_cliente' not in session:
@@ -257,6 +258,7 @@ def crear_reservacion():
     finally:
         conn.close()
 
+#Ruta a eliminar_reservacion
 @app.route('/eliminar_reservacion', methods=['POST'])
 def eliminar_reservacion():
     if 'id_cliente' not in session:
@@ -291,6 +293,54 @@ def eliminar_reservacion():
 
     finally:
         conn.close()
+
+@app.route('/principalPedido', methods=['POST'])
+def principal():
+    if 'comanda' not in session:
+        session['comanda'] = []
+    
+    platillo_id = request.form['id_platillo']
+    cantidad = int(request.form.get('cantidad', 1))
+
+    # Revisar si ya está en la comanda
+    for item in session['comanda']:
+        if item['id_platillo'] == platillo_id:
+            item['cantidad'] += cantidad
+            break
+    else:
+        session['carrito'].append({'id_platillo': platillo_id, 'cantidad': cantidad})
+
+    session.modified = True
+    return redirect(url_for('historialComanda'))
+
+@app.route('/historialPedidos')
+def historialPedidos():
+    carrito = session.get('carrito', [])
+    if not carrito:
+        return render_template('historialPedidos.html', items=[], total=0)
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    items = []
+    total = 0
+    for item in carrito:
+        cursor.execute("SELECT Nombre, Precio FROM Platillos WHERE Id_platillo = ?", (item['id_platillo'],))
+        platillo = cursor.fetchone()
+        subtotal = platillo[1] * item['cantidad']
+        total += subtotal
+        items.append({
+            'id': item['id_platillo'],
+            'nombre': platillo[0],
+            'precio': platillo[1],
+            'cantidad': item['cantidad'],
+            'subtotal': subtotal
+        })
+
+    conn.close()
+    return render_template('historialPedidos.html', items=items, total=total)
+
+    
 
 #Rutas de roles
 @app.route('/cliente')
