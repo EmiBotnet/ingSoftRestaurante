@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Historial de Pedidos</title>
+    <link rel="stylesheet" href="../static/css/Historialpedidos.css">
+</head>
+<body>
+
+ <!--Header-->
+        <div class="nav-contenedor">
+            <header>
+                <div class="nombre-empresa">
+                    <a class="nombre-empresa_texto" href="#">Restaurante: "Cuatro Estaciones"</a>
+                </div>
+                <div class="nav_subcontenedor">
+                    <nav class="nav-principal">
+                        <a class="nav-enlace" href="#">Reservaciones</a>
+                        <a class="nav-enlace" href="#">Delivery</a>
+                        <a class="nav-enlace" href="#">Contactanos</a>
+                        <a class="nav-enlace" href="#">Nosotros</a>
+                    </nav>
+                    <div class="nav_menu-img">
+                        <a href="#"><img class="nav_enlace-menu" src="../static/img/icons8-menú.svg"
+                                alt="icono_menu"></a>
+                    </div>
+                </div>
+            </header>
+        </div>
+
+    <div class="container">
+            <h1><i class="fas fa-history"></i> HISTORIAL DE PEDIDOS</h1>
+
+        <div class="table-container">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Solicitar</th>
+                        <th>Número de platillo</th>
+                        <th>Nombre de comida</th>
+                        <th><i class="fas fa-hashtag"></i> Cantidad</th>
+                        <th><i class="fas fa-money-bill-wave"></i> Total</th>
+                        <th><i class="fas fa-truck"></i> Domicilio</th>
+                        <th>Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>10</td>
+                        <td>001</td>
+                        <td class="food-item">
+                            <div class="food-img" style="background-color: #FF9F43;"></div>
+                            <span>Amala</span>
+                        </td>
+                        <td>5</td>
+                        <td class="price">500</td>
+                        <td><span class="delivery yes"><i class="fas fa-check-circle"></i> Sí</span></td>
+                        <td><button class="btn cancel"><i class="fas fa-times"></i> Cancelar</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>
