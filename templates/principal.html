@@ -40,7 +40,6 @@
                 <div class="nav_subcontenedor">
                     <nav class="nav-principal">
                         <a class="nav-enlace" href="{{ url_for('reservaciones') }}">Reservaciones</a>
-                        <a class="nav-enlace" href="#">Delivery</a>
                         <a class="nav-enlace" href="{{ url_for('historialPedidos') }}">Pedidos</a>
                         <a class="nav-enlace" href="#">Nosotros</a>
                     </nav>
@@ -104,7 +103,7 @@
                 </div>
                 <div>
                     <label for="cantidad">Cantidad:</label>
-                    <input type="number" name="cantidad" id="modal_cantidad" required>
+                    <input type="number" name="cantidad" id="modal_cantidad" min="1" max="10" required>
                 </div>
                 <div>
                     <label for="is_delivery">¿Es pedido a domicilio?</label>

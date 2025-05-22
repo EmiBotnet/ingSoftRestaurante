@@ -319,6 +319,7 @@ def principalPedido():
 
     if comanda_existente:
         id_comanda = comanda_existente[0]
+
     else:
         # Si no existe, crear una nueva comanda
         cursor.execute("""
@@ -335,11 +336,12 @@ def principalPedido():
         estatus_com = "En proceso"
 
         cursor.execute("""
-            INSERT INTO Comandas (Metodo_pago, Dir_envio, Num_contac, Estatus_com, Is_online)
-            OUTPUT INSERTED.Id_comanda
-            VALUES (?, ?, ?, ?, ?)
-        """, (metodo_pago, dir_envio, num_contact, estatus_com, is_online))
+        INSERT INTO Comandas (Metodo_pago, Dir_envio, Num_contac, Estatus_com, Is_online)
+        VALUES (?, ?, ?, 'En Proceso', ?)
+    """, (metodo_pago, dir_envio, num_contact, is_online))
 
+        # Obtener el ID de la comanda recién insertada
+        cursor.execute("SELECT SCOPE_IDENTITY()")
         id_comanda = cursor.fetchone()[0]
 
     # Paso 3: Obtener precio del platillo
@@ -359,6 +361,9 @@ def principalPedido():
         VALUES (?, ?, ?, ?, ?)
     """, (platillo_id, cantidad, pago_total, is_online, id_comanda))
 
+    print("Comanda ID:", id_comanda)
+    print("Platillo agregado:", platillo_id, "Cantidad:", cantidad, "Total:", pago_total)
+
     conn.commit()
     conn.close()
 
@@ -376,18 +381,22 @@ def historialPedidos():
 
     # Obtener historial completo con JOINs
     cursor.execute("""
-        SELECT 
-            C.Id_comanda, 
-            C.Estatus_com, 
-            DO.Is_delivery,
-            P.Nom_platillo, 
-            DO.Cant_platillos, 
-            P.Precio  -- CAMBIADO: ahora seleccionamos el precio del platillo
-            FROM Comandas C
-            JOIN Detalles_Orden DO ON C.Id_comanda = DO.Id_comanda
-            JOIN Platillos P ON DO.Id_platillo = P.Id_platillo
-            ORDER BY C.Id_comanda DESC
-    """)
+    SELECT 
+        C.Id_comanda, 
+        C.Estatus_com, 
+        DO.Is_delivery,
+        P.Nom_platillo, 
+        DO.Cant_platillos, 
+        P.Precio  
+    FROM Comandas C
+    JOIN Detalles_Orden DO ON C.Id_comanda = DO.Id_comanda
+    JOIN Platillos P ON DO.Id_platillo = P.Id_platillo
+    WHERE C.Num_contac = (
+        SELECT Num_tel_clie FROM Clientes WHERE Id_Cliente = ?
+    )
+    ORDER BY C.Id_comanda DESC
+""", (id_cliente,))
+
 
     registros = cursor.fetchall()
 
@@ -408,7 +417,17 @@ def historialPedidos():
 
     return render_template('historialPedidos.html', comandas=historial)
 
+@app.route('/cancelarPedido', methods=['POST'])
+def cancelarPedido():
+    id_comanda = request.form['id_comanda']
 
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    cursor.execute("UPDATE Comandas SET Estatus_com = 'Cancelada' WHERE Id_comanda = ?", (id_comanda,))
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for('historialPedidos'))
 
 #Rutas de roles
 @app.route('/cliente')
