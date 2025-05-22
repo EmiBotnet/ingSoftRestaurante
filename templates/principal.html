@@ -34,13 +34,14 @@
         <div class="nav-contenedor">
             <header>
                 <div class="nombre-empresa">
-                    <a class="nombre-empresa_texto" href="{{ url_for('principal') }}">Restaurante: "Cuatro Estaciones"</a>
+                    <a class="nombre-empresa_texto" href="{{ url_for('principal') }}">Restaurante: "Cuatro
+                        Estaciones"</a>
                 </div>
                 <div class="nav_subcontenedor">
                     <nav class="nav-principal">
                         <a class="nav-enlace" href="{{ url_for('reservaciones') }}">Reservaciones</a>
                         <a class="nav-enlace" href="#">Delivery</a>
-                        <a class="nav-enlace" href="#">Contactanos</a>
+                        <a class="nav-enlace" href="{{ url_for('historialPedidos') }}">Pedidos</a>
                         <a class="nav-enlace" href="#">Nosotros</a>
                     </nav>
                     <div class="nav_menu-img">
@@ -67,20 +68,59 @@
         <div class="contenedor-comida">
             {% for item in menu %}
             <div class="platillo">
-                <img class="imgPlatillo" src="data:image/png;base64,{{ item.foto }}" alt="Imagen de {{ item.nombre }}" width="200">
+                <img class="imgPlatillo" src="data:image/png;base64,{{ item.foto }}" alt="Imagen de {{ item.nombre }}"
+                    width="200">
                 <h2>{{ item.nombre }}</h2>
                 <p>{{ item.descripcion }}</p>
+
                 <p><strong>$:</strong>{{ item.precio }}</p>
                 <p><strong>Estado:</strong> {% if item.disponible %} Disponible {% else %} No disponible {% endif %}</p>
-                {% if item.disponible %} 
-                <button class="btn-agregar">Agregar al pedido</button>
-            {% else %}
-            <button class="btn-agregar" disabled>Agotado</button>
-            {% endif %}
+
+                {% if item.disponible %}
+                <button type="button" class="btn-agregar"
+                data-id="{{ item.id }}"
+                data-nombre="{{ item.nombre }}"
+                data-precio="{{ item.precio }}">
+                Agregar al pedido
+                </button>
+                {% else %}
+                <button class="btn-agregar" disabled>Agotado</button>
+                {% endif %}
             </div>
             {% endfor %}
         </div>
     </main>
+
+    <div id="modalPedido" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Agregar al pedido</h2>
+            <form action="/principalPedido" method="POST">
+                <input type="hidden" name="id_platillo" id="modal_id_platillo">
+                <input type="hidden" name="precio_unitario" id="modal_precio_unitario">
+                <div>
+                    <label>Platillo:</label>
+                    <span id="modal_nombre_platillo"></span>
+                </div>
+                <div>
+                    <label for="cantidad">Cantidad:</label>
+                    <input type="number" name="cantidad" id="modal_cantidad" required>
+                </div>
+                <div>
+                    <label for="is_delivery">¿Es pedido a domicilio?</label>
+                    <input type="checkbox" name="is_delivery" id="modal_delivery">
+                </div>
+                <div>
+                    <label>Total a pagar:</label>
+                    <span id="modal_pago_total">$0.00</span>
+                </div>
+                <button type="submit" class="btn">Agregar</button>
+            </form>
+        </div>
+    </div>
+
+
+    <script src="../static/JavaScript/modalPrincipal.js"></script>
 </body>
 
 </html>

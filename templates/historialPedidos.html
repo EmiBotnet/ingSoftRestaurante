@@ -5,59 +5,72 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Historial de Pedidos</title>
     <link rel="stylesheet" href="../static/css/historialPedidos.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 <body>
 
- <!--Header-->
-        <div class="nav-contenedor">
-            <header>
-                <div class="nombre-empresa">
-                    <a class="nombre-empresa_texto" href="#">Restaurante: "Cuatro Estaciones"</a>
+    <!--Header-->
+    <div class="nav-contenedor">
+        <header>
+            <div class="nombre-empresa">
+                <a class="nombre-empresa_texto" href="#">Restaurante: "Cuatro Estaciones"</a>
+            </div>
+            <div class="nav_subcontenedor">
+                <nav class="nav-principal">
+                    <a class="nav-enlace" href="{{ url_for('reservaciones') }}">Reservaciones</a>
+                    <a class="nav-enlace" href="{{ url_for('principal')}}">Menú</a>
+                    <a class="nav-enlace" href="#">Contactanos</a>
+                    <a class="nav-enlace" href="#">Nosotros</a>
+                </nav>
+                <div class="nav_menu-img">
+                    <a href="#"><img class="nav_enlace-menu" src="../static/img/icons8-menú.svg" alt="icono_menu"></a>
                 </div>
-                <div class="nav_subcontenedor">
-                    <nav class="nav-principal">
-                        <a class="nav-enlace" href="#">Reservaciones</a>
-                        <a class="nav-enlace" href="#">Delivery</a>
-                        <a class="nav-enlace" href="#">Contactanos</a>
-                        <a class="nav-enlace" href="#">Nosotros</a>
-                    </nav>
-                    <div class="nav_menu-img">
-                        <a href="#"><img class="nav_enlace-menu" src="../static/img/icons8-menú.svg"
-                                alt="icono_menu"></a>
-                    </div>
-                </div>
-            </header>
-        </div>
+            </div>
+        </header>
+    </div>
 
     <div class="container">
-            <h1><i class="fas fa-history"></i> HISTORIAL DE PEDIDOS</h1>
+        <h1><i class="fas fa-history"></i> HISTORIAL DE PEDIDOS</h1>
 
         <div class="table-container">
             <table>
                 <thead>
                     <tr>
-                        <th>Solicitar</th>
-                        <th>Número de platillo</th>
-                        <th>Nombre de comida</th>
-                        <th><i class="fas fa-hashtag"></i> Cantidad</th>
-                        <th><i class="fas fa-money-bill-wave"></i> Total</th>
-                        <th><i class="fas fa-truck"></i> Domicilio</th>
+                        <th>ID Comanda</th>
+                        <th>Cantidad</th>
+                        <th>Platillo</th>
+                        <th>Cantidad</th>
+                        <th>Total</th>
+                        <th>Delivery</th>
                         <th>Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
+                    {% for comanda in comandas %}
                     <tr>
-                        <td>10</td>
-                        <td>001</td>
+                        <td>{{ comanda.id_comanda }}</td>
+                        <td>{{ comanda.cantidad }}</td>
                         <td class="food-item">
-                            <div class="food-img" style="background-color: #FF9F43;"></div>
-                            <span>Amala</span>
+                            <span>{{ comanda.nombre }}</span>
                         </td>
-                        <td>5</td>
-                        <td class="price">500</td>
-                        <td><span class="delivery yes"><i class="fas fa-check-circle"></i> Sí</span></td>
-                        <td><button class="btn cancel"><i class="fas fa-times"></i> Cancelar</button></td>
+                        <td>{{ comanda.cantidad }}</td>
+                        <td class="price">${{ '%.2f' | format(comanda.pago_total) }}</td>
+                        <td>
+                            {% if comanda.is_delivery %}
+                            <span class="delivery yes"><i class="fas fa-check-circle"></i> Sí</span>
+                            {% else %}
+                            <span class="delivery no"><i class="fas fa-times-circle"></i> No</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            {% if comanda.estatus != "Cancelada" %}
+                            <button class="btn cancel"><i class="fas fa-times"></i> Cancelar</button>
+                            {% else %}
+                            <span class="cancelled">Cancelada</span>
+                            {% endif %}
+                        </td>
                     </tr>
+                    {% endfor %}
                 </tbody>
             </table>
         </div>

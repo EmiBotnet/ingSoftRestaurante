@@ -295,52 +295,120 @@ def eliminar_reservacion():
         conn.close()
 
 @app.route('/principalPedido', methods=['POST'])
-def principal():
-    if 'comanda' not in session:
-        session['comanda'] = []
-    
-    platillo_id = request.form['id_platillo']
-    cantidad = int(request.form.get('cantidad', 1))
+def principalPedido():
+    if 'id_cliente' not in session:
+        return "Cliente no identificado", 403
 
-    # Revisar si ya está en la comanda
-    for item in session['comanda']:
-        if item['id_platillo'] == platillo_id:
-            item['cantidad'] += cantidad
-            break
-    else:
-        session['carrito'].append({'id_platillo': platillo_id, 'cantidad': cantidad})
-
-    session.modified = True
-    return redirect(url_for('historialComanda'))
-
-@app.route('/historialPedidos')
-def historialPedidos():
-    carrito = session.get('carrito', [])
-    if not carrito:
-        return render_template('historialPedidos.html', items=[], total=0)
+    id_cliente = session['id_cliente']
+    platillo_id = int(request.form['id_platillo'])
+    cantidad_str = request.form.get('cantidad', '1')
+    cantidad = int(cantidad_str) if cantidad_str.isdigit() else 1
+    is_online = 1 if request.form.get('is_delivery') == 'on' else 0
 
     conn = get_db_connection()
     cursor = conn.cursor()
-    
-    items = []
-    total = 0
-    for item in carrito:
-        cursor.execute("SELECT Nombre, Precio FROM Platillos WHERE Id_platillo = ?", (item['id_platillo'],))
-        platillo = cursor.fetchone()
-        subtotal = platillo[1] * item['cantidad']
-        total += subtotal
-        items.append({
-            'id': item['id_platillo'],
-            'nombre': platillo[0],
-            'precio': platillo[1],
-            'cantidad': item['cantidad'],
-            'subtotal': subtotal
-        })
+
+    # Paso 1: Verificar si hay una comanda activa para el cliente
+    cursor.execute("""
+        SELECT Id_comanda FROM Comandas 
+        WHERE Estatus_com = 'En proceso' AND Num_contac = (
+            SELECT Num_tel_clie FROM Clientes WHERE Id_Cliente = ?
+        )
+    """, (id_cliente,))
+    comanda_existente = cursor.fetchone()
+
+    if comanda_existente:
+        id_comanda = comanda_existente[0]
+    else:
+        # Si no existe, crear una nueva comanda
+        cursor.execute("""
+            SELECT Dir_cliente, Num_tel_clie FROM Clientes WHERE Id_Cliente = ?
+        """, (id_cliente,))
+        cliente = cursor.fetchone()
+
+        if not cliente:
+            conn.close()
+            return "Cliente no encontrado", 404
+
+        dir_envio, num_contact = cliente
+        metodo_pago = 1  # Puedes hacerlo dinámico luego
+        estatus_com = "En proceso"
+
+        cursor.execute("""
+            INSERT INTO Comandas (Metodo_pago, Dir_envio, Num_contac, Estatus_com, Is_online)
+            OUTPUT INSERTED.Id_comanda
+            VALUES (?, ?, ?, ?, ?)
+        """, (metodo_pago, dir_envio, num_contact, estatus_com, is_online))
+
+        id_comanda = cursor.fetchone()[0]
+
+    # Paso 3: Obtener precio del platillo
+    cursor.execute("SELECT Precio FROM Platillos WHERE Id_platillo = ?", (platillo_id,))
+    precio_row = cursor.fetchone()
+
+    if not precio_row:
+        conn.close()
+        return "Platillo no encontrado", 404
+
+    precio_unitario = float(precio_row[0])
+    pago_total = precio_unitario * cantidad
+
+    # Paso 4: Insertar el producto en la tabla Detalles_Orden
+    cursor.execute("""
+        INSERT INTO Detalles_Orden (Id_platillo, Cant_platillos, Pago_total, Is_delivery, Id_comanda)
+        VALUES (?, ?, ?, ?, ?)
+    """, (platillo_id, cantidad, pago_total, is_online, id_comanda))
+
+    conn.commit()
+    conn.close()
+
+    return redirect(url_for('principal'))
+
+@app.route('/historialPedidos')
+def historialPedidos():
+    if 'id_cliente' not in session:
+        return redirect(url_for('login'))  # o lo que manejes como login
+
+    id_cliente = session['id_cliente']
+
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    # Obtener historial completo con JOINs
+    cursor.execute("""
+        SELECT 
+            C.Id_comanda, 
+            C.Estatus_com, 
+            DO.Is_delivery,
+            P.Nom_platillo, 
+            DO.Cant_platillos, 
+            P.Precio  -- CAMBIADO: ahora seleccionamos el precio del platillo
+            FROM Comandas C
+            JOIN Detalles_Orden DO ON C.Id_comanda = DO.Id_comanda
+            JOIN Platillos P ON DO.Id_platillo = P.Id_platillo
+            ORDER BY C.Id_comanda DESC
+    """)
+
+    registros = cursor.fetchall()
+
+    historial = []
+    for r in registros:
+        historial.append({
+        'id_comanda': r[0],
+        'estatus': r[1],
+        'is_delivery': r[2],
+        'nombre': r[3],
+        'cantidad': r[4],
+        'precio_unitario': r[5],
+        'pago_total': r[4] * r[5]
+    })
+
 
     conn.close()
-    return render_template('historialPedidos.html', items=items, total=total)
 
-    
+    return render_template('historialPedidos.html', comandas=historial)
+
+
 
 #Rutas de roles
 @app.route('/cliente')
