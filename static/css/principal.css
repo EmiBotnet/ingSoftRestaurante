@@ -263,3 +263,33 @@ header{
     color: #000;
 }
 
+.footer {
+    background-color: var(--color_principal);
+    color: white;
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: 3rem;
+    font-family: var(--fuente_principal);
+    border-top: 3px solid #d88c10;
+    box-shadow: 0 -4px 10px rgba(0,0,0,0.1);
+}
+
+.footer-contenido p {
+    margin: 0.3rem 0;
+    font-size: 1rem;
+}
+
+.footer-contenido a {
+    color: white;
+    text-decoration: underline;
+}
+
+.footer-contenido a:hover {
+    color: black;
+    transition: color 0.3s ease;
+}
+.contenedor {
+    position: relative;
+    z-index: 1;
+    padding-bottom: 5rem; /* Espacio para que no tape el footer */
+}
