@@ -14,7 +14,7 @@
         <header>
             <!-- Logo/Nombre del restaurante -->
             <div class="nombre-empresa">
-                <a class="nombre-empresa_texto" href="#">Restaurante: "Cuatro Estaciones"</a>
+                <a class="nombre-empresa_texto" href="{{ url_for('principal')}}">Restaurante: "Cuatro Estaciones"</a>
             </div>
 
             <!-- Contenedor del menú de navegación -->
@@ -22,8 +22,8 @@
                 <!-- Menú principal -->
                 <nav class="nav-principal">
                     <a class="nav-enlace" href="{{ url_for('principal')}}">Menú</a>
-                    <a class="nav-enlace" href="#">Delivery</a>
                     <a class="nav-enlace" href="#">Contactanos</a>
+                    <a class="nav-enlace" href="{{ url_for('perfil') }}">Perfil</a>
                 </nav>
 
                 <!-- Icono de menú (para versión móvil) -->
@@ -36,10 +36,6 @@
 
     <!-- Contenedor principal del contenido -->
     <div class="contenedor-principal">
-        <!-- Barra superior con información de fecha/hora -->
-        <header class="barra-superior">
-
-        </header>
 
         <!-- Contenido principal dividido en dos columnas -->
         <div class="contenido-principal">

@@ -1,61 +1,68 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Perfil - Restaurante "Cuatro Estaciones"</title>
     <link rel="stylesheet" href="../static/css/perfil.css">
+    <link rel="stylesheet" href="../static/css/principal.css">
 </head>
+
 <body>
 
     <header>
-        <div class="top-bar">
-            <span class="menu-icon">☰</span>
-            <h1>Restaurante: <em>"Cuatro estaciones"</em></h1>
-            <div class="icons">
-                <span class="cart-icon">🛒</span>
-            </div>
+        <div class="nombre-empresa">
+            <a class="nombre-empresa_texto" href="{{ url_for('principal') }}">Restaurante: "Cuatro
+                Estaciones"</a>
+        </div>
+        <div class="nav_subcontenedor">
+            <nav class="nav-principal">
+                <a class="nav-enlace" href="{{ url_for('reservaciones') }}">Reservaciones</a>
+                <a class="nav-enlace" href="{{ url_for('historialPedidos') }}">Pedidos</a>
+                <a class="nav-enlace" href="{{ url_for('principal')}}">Menú</a>
+                <a class="nav-enlace" href="#">Nosotros</a>
+            </nav>
         </div>
     </header>
 
     <section class="profile-container">
         <h2>Mi perfil</h2>
 
-        <div class="profile-photo">
-            <img id="profile-image" src="imagenes/icon-perfil.png" alt="Foto de perfil">
-            <p>
-                <label for="file-input" class="file-label">Cambiar foto de perfil</label>
-                <input type="file" id="file-input" accept="image/*" style="display: none;">
-            </p>
-        </div>
+        <form method="POST" enctype="multipart/form-data">
+            <div class="profile-photo">
+                <img id="profile-image" src="{{ url_for('static', filename=cliente.foto) }}" alt="Foto de perfil">
+                <p>
+                    <input type="file" name="foto_perfil" id="file-input" accept="image/*">
+                </p>
+            </div>
 
-        <form>
             <label for="nombre">Nombre(s)</label>
-            <input type="text" id="nombre" placeholder="Ingresa tu nombre">
+            <input type="text" id="nombre" name="nombre" value="{{ cliente.nombre }}" placeholder="Ingresa tu nombre">
 
             <label for="apellidos">Apellidos(s)</label>
-            <input type="text" id="apellidos" placeholder="Ingresa tu(s) apellidos(s)">
-
-            <label for="fecha-nacimiento">Fecha de nacimiento</label>
-            <input type="date" id="fecha-nacimiento">
+            <input type="text" id="apellidos" name="apellidos" value="{{ cliente.apellidos }}"
+                placeholder="Ingresa tu(s) apellidos(s)">
 
             <label for="telefono">Teléfono</label>
-            <input type="text" id="telefono" placeholder="Ingrese su teléfono">
+            <input type="text" id="telefono" name="telefono" value="{{ cliente.telefono }}"
+                placeholder="Ingrese su teléfono">
 
             <label for="email">Correo electrónico</label>
-            <input type="email" id="email" placeholder="Ingrese su correo electrónico">
+            <input type="email" id="email" name="email" value="{{ cliente.email }}"
+                placeholder="Ingrese su correo electrónico">
 
             <label for="password">Contraseña</label>
-            <input type="password" id="password" placeholder="Ingresar contraseña">
+            <input type="password" id="password" name="password"
+                placeholder="Ingresar nueva contraseña (si desea cambiarla)">
 
             <button type="submit">Guardar cambios</button>
-            <button id="back-button" type="button">Regresar</button>
-            <button id="logout-button">Cerrar Sesión</button>
+            <button id="logout-button" type="button" onclick="location.href='{{ url_for('logout') }}'">Cerrar
+                Sesión</button>
         </form>
+
     </section>
-
     <script src="JavaScript/perfil.js"></script>
-
 </body>
-</html>
 
+</html>

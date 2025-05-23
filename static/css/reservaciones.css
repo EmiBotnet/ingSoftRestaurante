@@ -23,11 +23,7 @@ header{
 }
 
 /* Estilos para el nombre/logo del restaurante */
-.nombre-empresa{
-    display: flex;
-    font-family: var(--fuente_tercearia);
-    font-style: var(--estilo_terceario);
-}
+
 .nombre-empresa_texto{
     text-decoration: none;
     color: black;

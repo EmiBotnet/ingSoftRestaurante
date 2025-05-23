@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Historial de Pedidos</title>
     <link rel="stylesheet" href="../static/css/historialPedidos.css">
+    <link rel="stylesheet" href="../static/css/principal.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
@@ -15,7 +16,7 @@
     <div class="nav-contenedor">
         <header>
             <div class="nombre-empresa">
-                <a class="nombre-empresa_texto" href="#">Restaurante: "Cuatro Estaciones"</a>
+                <a class="nombre-empresa_texto" href="{{ url_for('principal')}}">Restaurante: "Cuatro Estaciones"</a>
             </div>
             <div class="nav_subcontenedor">
                 <nav class="nav-principal">
@@ -24,9 +25,6 @@
                     <a class="nav-enlace" href="#">Contactanos</a>
                     <a class="nav-enlace" href="#">Nosotros</a>
                 </nav>
-                <div class="nav_menu-img">
-                    <a href="#"><img class="nav_enlace-menu" src="../static/img/icons8-menú.svg" alt="icono_menu"></a>
-                </div>
             </div>
         </header>
     </div>

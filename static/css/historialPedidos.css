@@ -21,14 +21,7 @@
     padding: 0;
     box-sizing: border-box;
 }
-header {
-    display: flex;
-    height: 70px;
-    background-color: var(--color_principal);
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px;
-}
+
 
 
 body {
@@ -44,29 +37,6 @@ body {
     padding-top: 100px;
 }
 
-.header h1 {
-    color: var(--primary);
-    font-size: 28px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-}
-
-
-.nombre-empresa{
-    display: flex;
-    font-family: var(--fuente_tercearia);
-    font-style: var(--estilo_terceario);
-}
-.nombre-empresa_texto{
-    text-decoration: none;
-    color: black;
-    text-transform: uppercase;
-    height: 20px;
-    font-weight: bold;
-    font-size: 3ex;
-}
 /*Navbar*/
 .nav_subcontenedor{
     display: flex;

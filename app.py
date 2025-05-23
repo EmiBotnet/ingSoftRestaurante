@@ -2,6 +2,9 @@ from flask import Flask, render_template, request, redirect, url_for, session
 import pyodbc  # Necesario para conectar a SQL Server
 import base64
 from werkzeug.security import generate_password_hash, check_password_hash
+import os
+from werkzeug.utils import secure_filename
+
 
 # Usar comando "python app.py" para inicializar el servidor
 
@@ -429,6 +432,92 @@ def cancelarPedido():
 
     return redirect(url_for('historialPedidos'))
 
+@app.route('/perfil', methods=['GET', 'POST'])
+def perfil():
+    if 'id_cliente' not in session:
+        return redirect(url_for('login'))
+
+    id_cliente = session['id_cliente']
+    conn = get_db_connection()
+    cursor = conn.cursor()
+
+    if request.method == 'POST':
+        nombre = request.form['nombre']
+        apellidos = request.form['apellidos']
+        telefono = request.form['telefono']
+        email = request.form['email']
+        password = request.form['password'].strip()
+
+        partes_nombre = nombre.split()
+        prim_nom = partes_nombre[0]
+        seg_nom = partes_nombre[1] if len(partes_nombre) > 1 else ''
+
+        partes_ape = apellidos.split()
+        prim_ape = partes_ape[0] if len(partes_ape) > 0 else ''
+
+        # Procesar imagen si se subió
+        foto_perfil = request.files.get('foto_perfil')
+        if foto_perfil and foto_perfil.filename != '':
+            nombre_archivo = secure_filename(f"cliente_{id_cliente}_{foto_perfil.filename}")
+            ruta_guardado = os.path.join('static', 'img', 'perfiles', nombre_archivo)
+            os.makedirs(os.path.dirname(ruta_guardado), exist_ok=True)
+            foto_perfil.save(ruta_guardado)
+
+            cursor.execute("""
+                UPDATE Clientes 
+                SET Foto_perfil = ?
+                WHERE Id_Cliente = ?
+            """, (f"img/perfiles/{nombre_archivo}", id_cliente))
+
+        # Actualizar campos principales
+        if password:  # Si desea cambiar la contraseña
+            cursor.execute("""
+                UPDATE Clientes 
+                SET Prim_nom_cli = ?, Seg_nom_cli = ?, Prim_ape_cli = ?, 
+                    Num_tel_clie = ?, Correo_electronico = ?, Contraseña = ?
+                WHERE Id_Cliente = ?
+            """, (prim_nom, seg_nom, prim_ape, telefono, email, password, id_cliente))
+        else:  # Si no cambia la contraseña
+            cursor.execute("""
+                UPDATE Clientes 
+                SET Prim_nom_cli = ?, Seg_nom_cli = ?, Prim_ape_cli = ?, 
+                    Num_tel_clie = ?, Correo_electronico = ?
+                WHERE Id_Cliente = ?
+            """, (prim_nom, seg_nom, prim_ape, telefono, email, id_cliente))
+
+        conn.commit()
+
+    # Obtener datos actualizados del cliente
+    cursor.execute("""
+        SELECT Prim_nom_cli, Seg_nom_cli, Prim_ape_cli, Dir_cliente, 
+               Num_tel_clie, Correo_electronico, Foto_perfil
+        FROM Clientes WHERE Id_Cliente = ?
+    """, (id_cliente,))
+    cliente = cursor.fetchone()
+    conn.close()
+
+    if not cliente:
+        return "Cliente no encontrado", 404
+
+    cliente_data = {
+        'nombre': f"{cliente[0]} {cliente[1]}",
+        'apellidos': cliente[2],
+        'direccion': cliente[3],
+        'telefono': cliente[4],
+        'email': cliente[5],
+        'foto': cliente[6] if cliente[6] else "imagenes/icon-perfil.png"
+    }
+
+    return render_template('perfil.html', cliente=cliente_data)
+
+
+
+#Ruta del logout
+@app.route('/logout')
+def logout():
+    session.clear()
+    return redirect(url_for('login'))
+
 #Rutas de roles
 @app.route('/cliente')
 def cliente():
@@ -452,10 +541,6 @@ def mesero():
 def invitado_directo():
     return redirect(url_for('principal'))
 
-@app.route('/logout')
-def logout():
-    session.clear()
-    return redirect('/')
 
 if __name__ == '__main__':
     app.run(debug=True)
